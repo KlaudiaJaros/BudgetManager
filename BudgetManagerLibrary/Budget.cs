@@ -6,8 +6,8 @@ namespace BudgetManagerLibrary
 {
      public class Budget
     {
-        private string Name { get; set; }
-        private double Balance { get; set; }
+        public string Name { get; set; }
+        public double Balance { get; set; }
         public int Id { get; set; }
         private List<Expense> Expenses = new List<Expense>();
 

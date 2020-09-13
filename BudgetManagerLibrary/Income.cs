@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BudgetManagerLibrary
 {
-    class Expense
+    class Income
     {
         private string Name { get; set; }
         private double Amount { get; set; }
@@ -13,7 +13,7 @@ namespace BudgetManagerLibrary
         private bool IsYearly { get; set; }
         private int BudgetID { get; set; }
 
-        public Expense(string name, double amount, string category, int budget)
+        public Income(string name, double amount, string category, int budget)
         {
             Name = name;
             Amount = amount;

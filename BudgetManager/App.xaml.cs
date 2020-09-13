@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Data.SqlClient;
 
 namespace BudgetManager
 {
@@ -22,8 +23,9 @@ namespace BudgetManager
         [STAThread]
         public static void Main()
         {
-            // establish database connections:
-            GlobalConfig.InitialiseConnections(true, true);
+            /* Initialise the database connections (sql database, text file): */
+            GlobalConfig.InitialiseConnections(true, false);
+
             var application = new App();
             /* To run from the Main Window: */
             

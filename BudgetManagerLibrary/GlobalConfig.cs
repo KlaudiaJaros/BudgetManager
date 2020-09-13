@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 
 namespace BudgetManagerLibrary
@@ -35,6 +36,16 @@ namespace BudgetManagerLibrary
                 TextConnector text = new TextConnector();
                 Connections.Add(text);
             }
+        }
+
+        /// <summary>
+        /// returns a connection string from App.config
+        /// </summary>
+        /// <param name="Connection Name"></param>
+        /// <returns></returns>
+        public static string CnnString(string name)
+        {
+            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
 
     }

@@ -32,6 +32,7 @@ namespace BudgetManager
                 double balance = double.Parse(startingBalance.Text);
                 Budget newBudget = new Budget(budgetName.Text, balance);
 
+                // create a budget entry for all existing connections:
                 foreach(IDataConnection db in GlobalConfig.Connections)
                 {
                     db.CreateBudget(newBudget);
@@ -39,7 +40,7 @@ namespace BudgetManager
 
                 // reset values:
                 startingBalance.Text = "0";
-                budgetName.Text = "My budget";
+                budgetName.Text = "My Budget";
             }
         }
 
