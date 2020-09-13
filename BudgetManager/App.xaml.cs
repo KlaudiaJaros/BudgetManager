@@ -22,6 +22,8 @@ namespace BudgetManager
         [STAThread]
         public static void Main()
         {
+            // establish database connections:
+            GlobalConfig.InitialiseConnections(true, true);
             var application = new App();
             /* To run from the Main Window: */
             
@@ -29,10 +31,9 @@ namespace BudgetManager
             //application.Run();
 
             /* To run from a chosen window: */
-            application.Run(new AddIncome());
+            application.Run(new CreateNewBudgetWindow());
 
-            // establish database connections:
-            GlobalConfig.InitialiseConnections(true, true);
+
         }
     }
 }

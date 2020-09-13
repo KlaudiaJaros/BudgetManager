@@ -11,5 +11,17 @@ namespace BudgetManagerLibrary
         public int Id { get; set; }
         private List<Expense> Expenses = new List<Expense>();
 
+        public Budget(string name, double balance)
+        {
+            Name = name;
+            Balance = balance;
+        }
+        public Budget(string name, double balance, int id)
+        {
+            Name = name;
+            Balance = balance;
+            Id = id;
+        }
+
     }
 }

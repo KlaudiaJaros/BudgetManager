@@ -35,7 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>budgetmanager_icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -126,9 +127,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="budgetmanager_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="BM_icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +134,9 @@
       <Project>{AD83BDE8-1970-4B29-A249-900057FED4F9}</Project>
       <Name>BudgetManagerLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="BM_icon_v2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

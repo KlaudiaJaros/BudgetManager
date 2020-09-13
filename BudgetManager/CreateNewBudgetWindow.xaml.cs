@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetManagerLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,17 @@ namespace BudgetManager
         {
             if (validateForm())
             {
+                double balance = double.Parse(startingBalance.Text);
+                Budget newBudget = new Budget(budgetName.Text, balance);
 
+                foreach(IDataConnection db in GlobalConfig.Connections)
+                {
+                    db.CreateBudget(newBudget);
+                }
+
+                // reset values:
+                startingBalance.Text = "0";
+                budgetName.Text = "My budget";
             }
         }
 
@@ -50,12 +61,15 @@ namespace BudgetManager
             if (!balanceValidNumber)
             {
                 output = false;
+                MessageBox.Show("Invalid starting balance. Please enter a valid number.");
+                // integer range: -2,147,483,648 to 2,147,483,647
             }
             // assumption: balance can be negative
 
-            if (budgetName == null)
+            if (budgetName.Text.Length == 0 || budgetName.Text.Length > 100)
             {
                 output = false;
+                MessageBox.Show("Invalid name. Please enter a valid name with 1-100 characters.");
             }
 
             return output;

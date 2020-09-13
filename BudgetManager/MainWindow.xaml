@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="Budget Manager" Height="407.144" Width="579.579" Icon="BM_icon.ico">
+        Title="Budget Manager" Height="407.144" Width="579.579" Icon="BM_icon_v2.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>

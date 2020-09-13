@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="Create New Budget" Height="401.086" Width="582.608" Icon="BM_icon.ico" FontSize="18">
+        Title="Create New Budget" Height="401.086" Width="582.608" Icon="BM_icon_v2.ico" FontSize="18">
 
     <Border Padding="15">
         <StackPanel>
@@ -24,9 +24,9 @@
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="0" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <TextBox Name="budgetName" Grid.Column="1" Grid.Row="0" MaxWidth="300" FontSize="18" Text="My Budget" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Text="Starting balance:" Grid.Column="0" Grid.Row="1" FontSize="20"
+                <TextBlock Text="Starting balance(£):" Grid.Column="0" Grid.Row="1" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <TextBox Name="startingBalance" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="£100" FontSize="18" FontFamily="Segoe UI Semilight"/>
+                <TextBox Name="startingBalance" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="0" FontSize="18" FontFamily="Segoe UI Semilight"/>
 
             </Grid>
 
