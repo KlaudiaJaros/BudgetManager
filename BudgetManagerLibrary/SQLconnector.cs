@@ -9,7 +9,6 @@ namespace BudgetManagerLibrary
 {
     public class SQLconnector : IDataConnection
     {
-        // TODO - Make the method actually save to the database.
         /// <summary>
         /// Saves a new budget to the database.
         /// </summary>

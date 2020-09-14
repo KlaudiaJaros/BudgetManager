@@ -15,26 +15,25 @@ namespace BudgetManagerLibrary
         /// text files connections, because I want my app to have the option to save to both.
         /// You want the list setter to be private, otherwise anyone could change it.
         /// </summary>
-        public static List<IDataConnection> Connections { get; private set; } = new List<IDataConnection>();
+        public static IDataConnection SQLConnection { get; private set; }
+        public static IDataConnection TextFileConnection { get; private set; }
 
         /// <summary>
         /// Based on which parameter is true, this method establishes either a database connection or a text file connection.
         /// You can change this method parameters to add other sources, for now just a database and a text file.
         /// </summary>
-        public static void InitialiseConnections (bool database, bool textFiles)
+        public static void InitialiseConnections(bool SQLBool, bool textFileBool)
         {
             // separate if statements, because if both parameters are true, the app will save to both, which I want 
-            if (database)
+            if (SQLBool)
             {
-                // TODO - set up the sql connector properly
                 SQLconnector sql = new SQLconnector();
-                Connections.Add(sql);
+                SQLConnection = sql;
             }
-            if (textFiles)
+            if (textFileBool)
             {
-                // TODO - create the text connection
                 TextConnector text = new TextConnector();
-                Connections.Add(text);
+                TextFileConnection= text;
             }
         }
 

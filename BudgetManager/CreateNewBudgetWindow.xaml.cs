@@ -32,11 +32,14 @@ namespace BudgetManager
                 double balance = double.Parse(startingBalance.Text);
                 Budget newBudget = new Budget(budgetName.Text, balance);
 
-                // create a budget entry for all existing connections:
-                foreach(IDataConnection db in GlobalConfig.Connections)
-                {
-                    db.CreateBudget(newBudget);
-                }
+                /* create a budget entry for all existing connections: */
+                // temporary budget instance:
+                Budget budgetEntry = new Budget();
+                // sql:
+                budgetEntry = GlobalConfig.SQLConnection.CreateBudget(newBudget);
+                // text file:
+                // pass the modified budget instance (sql added an unique ID to it) to the text file saver:
+                GlobalConfig.TextFileConnection.CreateBudget(budgetEntry);
 
                 // reset values:
                 startingBalance.Text = "0";
