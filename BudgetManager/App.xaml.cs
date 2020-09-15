@@ -33,7 +33,7 @@ namespace BudgetManager
             //application.Run();
 
             /* To run from a chosen window: */
-            application.Run(new CreateNewBudgetWindow());
+            application.Run(new ManageBudgetsWindow());
 
 
         }

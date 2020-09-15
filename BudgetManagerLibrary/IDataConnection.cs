@@ -6,6 +6,8 @@ namespace BudgetManagerLibrary
 {
     public interface IDataConnection
     {
-        Budget CreateBudget(Budget budget);
+        Budget SaveBudget(Budget budget);
+        Expense SaveExpense(Expense expense);
+        Income SaveIncome(Income income);
     }
 }

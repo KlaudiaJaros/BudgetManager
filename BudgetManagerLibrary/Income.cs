@@ -4,21 +4,24 @@ using System.Text;
 
 namespace BudgetManagerLibrary
 {
-    class Income
+    public class Income
     {
-        private string Name { get; set; }
-        private double Amount { get; set; }
-        private string Category { get; set; }
-        private bool IsMonthly { get; set; }
-        private bool IsYearly { get; set; }
-        private int BudgetID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Amount { get; set; }
+        public DateTime? Date { get; set; }
+        public int BudgetID { get; set; }
 
-        public Income(string name, double amount, string category, int budget)
+        public Income(string name, double amount, DateTime? date, int budget)
         {
             Name = name;
             Amount = amount;
-            Category = category;
+            Date= date;
             BudgetID = budget;
+        }
+        public Income()
+        {
+
         }
     }
 }

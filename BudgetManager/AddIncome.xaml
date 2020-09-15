@@ -26,16 +26,17 @@
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="0" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <TextBox Name="incomeName" Grid.Column="1" Grid.Row="0" MaxWidth="300" Text="Salary" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Text="Amount:" Grid.Column="0" Grid.Row="1" FontSize="20"
+                <TextBlock Text="Amount (£):" Grid.Column="0" Grid.Row="1" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <TextBox Name="incomeAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="£1150" FontFamily="Segoe UI Semilight"/>
+                <TextBox Name="incomeAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="1150" FontFamily="Segoe UI Semilight"/>
 
                 <TextBlock Text="Date:" Grid.Column="0" Grid.Row="2" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <!-- <ComboBox Name="expenseDate" Grid.Column="1" Grid.Row="3"/> -->
-                <DatePicker Name="expenseDate"  Grid.Column="1" Grid.Row="2"/>
+                <DatePicker Name="incomeDate"  Grid.Column="1" Grid.Row="2"/>
                 <TextBlock Text="Is it reoccuring?" Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>
                 <ComboBox Name="incomeFrequency" Grid.Column="1" Grid.Row="3" SelectedIndex="1">
+                    <ComboBoxItem>No</ComboBoxItem>
                     <ComboBoxItem>Weekly</ComboBoxItem>
                     <ComboBoxItem>Monthly</ComboBoxItem>
                     <ComboBoxItem>Yearly</ComboBoxItem>
@@ -64,7 +65,7 @@
                 </Button>
 
                 <Button Name="finaliseButton" Grid.Column="2" Grid.Row="2"   
-                        Margin="10"  Content="Finalise">
+                        Margin="10"  Content="Finalise" Click="finaliseButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>

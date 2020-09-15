@@ -20,6 +20,8 @@ namespace BudgetManager
     /// </summary>
     public partial class CreateNewBudgetWindow : Window
     {
+        private bool addExpense;
+
         public CreateNewBudgetWindow()
         {
             InitializeComponent();
@@ -36,31 +38,45 @@ namespace BudgetManager
                 // temporary budget instance:
                 Budget budgetEntry = new Budget();
                 // sql:
-                budgetEntry = GlobalConfig.SQLConnection.CreateBudget(newBudget);
+                budgetEntry = GlobalConfig.SQLConnection.SaveBudget(newBudget);
                 // text file:
                 // pass the modified budget instance (sql added an unique ID to it) to the text file saver:
-                GlobalConfig.TextFileConnection.CreateBudget(budgetEntry);
+                GlobalConfig.TextFileConnection.SaveBudget(budgetEntry);
 
                 // reset values:
                 startingBalance.Text = "0";
                 budgetName.Text = "My Budget";
+
+                
+                if (addExpense)
+                {
+                    // TODO: go to the AddExpenses window
+                    
+                }
+                else
+                {
+                    // TODO: go to the BudgetViewer window
+                    
+                }
+
             }
         }
 
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
-           // MainWindow main = new MainWindow();
+            // TODO: go to the Main window
+            // MainWindow main = new MainWindow();
             //this.Content = main.Content;
         }
 
         private bool validateForm()
         {
             bool output = true;
-            int balance = 0;
+            double balance = 0;
 
             // TryParse takes in a string and tries to parse it into an integer. If successful, it will save the number in
             // the 'out' variable in this case 'balance' and the boolean will return true. If unsuccessful, boolean value becomes false.
-            bool balanceValidNumber = int.TryParse(startingBalance.Text, out balance);
+            bool balanceValidNumber = double.TryParse(startingBalance.Text, out balance);
             
             if (!balanceValidNumber)
             {
@@ -77,6 +93,16 @@ namespace BudgetManager
             }
 
             return output;
+        }
+
+        private void addExpensesTrue_Checked(object sender, RoutedEventArgs e)
+        {
+            addExpense = true;
+        }
+
+        private void addExpensesFalse_Checked(object sender, RoutedEventArgs e)
+        {
+            addExpense = false;
         }
     }
 }

@@ -26,16 +26,17 @@
 
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="0" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <TextBox Name="expenseName" Grid.Column="1" Grid.Row="0" MaxWidth="300" Text="Rent" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Text="Amount:" Grid.Column="0" Grid.Row="1" FontSize="20"
+                <TextBox Name="expenseName" Grid.Column="1" Grid.Row="0" MaxWidth="300" Text="My Expense" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Text="Amount (£):" Grid.Column="0" Grid.Row="1" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <TextBox Name="expenseAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="£350" FontFamily="Segoe UI Semilight"/>
+                <TextBox Name="expenseAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="350" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Text="Category:" Grid.Column="0" Grid.Row="2" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <ComboBox Name="expenseCategory" Grid.Column="1" Grid.Row="2">
                     <ComboBoxItem>Accommodation bills (Rent, Electricity)</ComboBoxItem>
                     <ComboBoxItem>Media bills (Phone, Internet, TV)</ComboBoxItem>
                     <ComboBoxItem>Groceries</ComboBoxItem>
+                    <ComboBoxItem>Shopping</ComboBoxItem>
                     <ComboBoxItem>Eating Out</ComboBoxItem>
                     <ComboBoxItem>Nights out</ComboBoxItem>
                     <ComboBoxItem>Transport</ComboBoxItem>
@@ -45,11 +46,11 @@
                 </ComboBox>
                 <TextBlock Text="Date:" Grid.Column="0" Grid.Row="3" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <!-- <ComboBox Name="expenseDate" Grid.Column="1" Grid.Row="3"/> -->
                 <DatePicker Name="expenseDate"  Grid.Column="1" Grid.Row="3"/>
                 
                 <TextBlock Text="Is it reoccuring?" Grid.Row="4" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>
                 <ComboBox Name="expenseFrequency" Grid.Column="1" Grid.Row="4" SelectedIndex="1">
+                    <ComboBoxItem>No</ComboBoxItem>
                     <ComboBoxItem>Weekly</ComboBoxItem>
                     <ComboBoxItem>Monthly</ComboBoxItem>
                     <ComboBoxItem>Yearly</ComboBoxItem>
@@ -60,6 +61,7 @@
 
             </Grid>
 
+            <!-- bottom menu: -->
             <Grid Margin="0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -78,8 +80,8 @@
                     </Button.Background>
                 </Button>
                 
-                <Button Name="finaliseButton" Grid.Column="2" Grid.Row="2"   
-                        Margin="10"  Content="Finalise">
+                <Button Name="finaliseExpenseButton" Grid.Column="2" Grid.Row="2"   
+                        Margin="10"  Content="Finalise" Click="finaliseExpenseButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>

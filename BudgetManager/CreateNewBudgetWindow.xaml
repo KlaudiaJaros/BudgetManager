@@ -43,8 +43,8 @@
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <RadioButton Content="Yes" Grid.Column="1" Grid.Row="0" />
-                <RadioButton Content="No" Grid.Column="2" Grid.Row="0" />
+                <RadioButton Name="addExpensesTrue" Content="Yes" Grid.Column="1" Grid.Row="0" Checked="addExpensesTrue_Checked" />
+                <RadioButton Name="addExpensesFalse"  Content="No" Grid.Column="2" Grid.Row="0" Checked="addExpensesFalse_Checked" />
 
                 <Button Name="returnButton" Grid.Column="0" Grid.Row="2" Content="Return" Margin="10" Grid.ColumnSpan="2" Click="returnButton_Click"/>
                 <Button Name="createBudgetButton" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"  

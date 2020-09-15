@@ -26,6 +26,11 @@ namespace BudgetManagerLibrary
             Balance = balance;
             Id = id;
         }
+        public override string ToString()
+        {
+            return Name;
+        }
+
 
     }
 }

@@ -26,14 +26,15 @@ namespace BudgetManager
             InitializeComponent();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void manageBudgets_Click(object sender, RoutedEventArgs e)
         {
-
+            // TODO: go to ManageBudgets Window
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void createNewBudget_Click(object sender, RoutedEventArgs e)
         {
-            
+            // TODO: go to CreateNewBudgetWindow
+
             //CreateNewBudgetWindow win2 = new CreateNewBudgetWindow();
             //this.Content = win2.Content;
             //win2.Show();
