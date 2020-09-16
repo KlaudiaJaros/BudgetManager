@@ -50,7 +50,12 @@ namespace BudgetManager
                 incomeName.Text = "My Income";
                 incomeDate.SelectedDate = null;
                 incomeFrequency.SelectedItem = null;
-                
+
+
+                // TODO: open ViewBudgetWindow
+                MainWindow window = new MainWindow();
+                window.Show();
+                this.Close();
             }
         }
         private bool validateForm()
@@ -90,6 +95,11 @@ namespace BudgetManager
             return output;
         }
 
-
+        private void returnButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
+        }
     }
 }

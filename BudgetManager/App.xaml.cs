@@ -29,11 +29,11 @@ namespace BudgetManager
             var application = new App();
             /* To run from the Main Window: */
             
-            //application.InitializeComponent();
-            //application.Run();
+            application.InitializeComponent();
+            application.Run();
 
             /* To run from a chosen window: */
-            application.Run(new ManageBudgetsWindow());
+            //application.Run(new ManageBudgetsWindow());
 
 
         }

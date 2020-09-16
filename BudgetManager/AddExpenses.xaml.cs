@@ -53,7 +53,11 @@ namespace BudgetManager
                 expenseCategory.SelectedItem = null;
                 expenseDate.SelectedDate = null;
                 expenseFrequency.SelectedItem = null;
-                
+
+                // TODO: open ViewBudgetWindow
+                MainWindow window = new MainWindow();
+                window.Show();
+                this.Close();
             }
         }
 
@@ -98,6 +102,13 @@ namespace BudgetManager
             }
 
             return output;
+        }
+
+        private void returnButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

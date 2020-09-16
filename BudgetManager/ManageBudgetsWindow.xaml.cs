@@ -49,6 +49,9 @@ namespace BudgetManager
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: return to MainWindow
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
 
         private void NewExpenseButton_Click(object sender, RoutedEventArgs e)
@@ -62,12 +65,10 @@ namespace BudgetManager
             {
                 budget = (Budget)existingBudgets.SelectedItem;
                 AddExpenses win = new AddExpenses(budget.Id);
-                this.Content = win.Content;
                 win.Show();
-                
+                this.Close();  
+                // TODO: fix the window connection
             }
-
-
         }
 
         private void NewIncomeButton_Click(object sender, RoutedEventArgs e)
@@ -80,7 +81,10 @@ namespace BudgetManager
             else
             {
                 budget = (Budget)existingBudgets.SelectedItem;
-                // // TODO: AddIncome Window and pass the budget id
+                AddIncome win = new AddIncome(budget.Id);
+                win.Show();
+                this.Close();
+                    //TODO: fix the window connection
             }
         }
 

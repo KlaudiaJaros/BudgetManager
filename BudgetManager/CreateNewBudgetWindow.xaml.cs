@@ -51,6 +51,9 @@ namespace BudgetManager
                 if (addExpense)
                 {
                     // TODO: go to the AddExpenses window
+                    AddExpenses window = new AddExpenses(budgetEntry.Id);
+                    window.Show();
+                    this.Close();
                     
                 }
                 else
@@ -65,8 +68,10 @@ namespace BudgetManager
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: go to the Main window
-            // MainWindow main = new MainWindow();
-            //this.Content = main.Content;
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
+
         }
 
         private bool validateForm()

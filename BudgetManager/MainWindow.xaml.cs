@@ -19,7 +19,7 @@ namespace BudgetManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         public MainWindow()
         {           
@@ -29,15 +29,18 @@ namespace BudgetManager
         private void manageBudgets_Click(object sender, RoutedEventArgs e)
         {
             // TODO: go to ManageBudgets Window
+            ManageBudgetsWindow window = new ManageBudgetsWindow();
+            window.Show();
+            this.Close();
         }
 
         private void createNewBudget_Click(object sender, RoutedEventArgs e)
         {
             // TODO: go to CreateNewBudgetWindow
 
-            //CreateNewBudgetWindow win2 = new CreateNewBudgetWindow();
-            //this.Content = win2.Content;
-            //win2.Show();
+            CreateNewBudgetWindow window = new CreateNewBudgetWindow();
+            window.Show();
+            this.Close();
         }
     }
 }
