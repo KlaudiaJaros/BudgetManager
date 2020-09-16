@@ -31,12 +31,12 @@ namespace BudgetManager
         {
             if (validateForm())
             {
-                double balance = double.Parse(startingBalance.Text);
+                decimal balance = decimal.Parse(startingBalance.Text);
                 Budget newBudget = new Budget(budgetName.Text, balance);
 
                 /* create a budget entry for all existing connections: */
                 // temporary budget instance:
-                Budget budgetEntry = new Budget();
+                Budget budgetEntry = new Budget(null, 0);
                 // sql:
                 budgetEntry = GlobalConfig.SQLConnection.SaveBudget(newBudget);
                 // text file:

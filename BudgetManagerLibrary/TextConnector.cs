@@ -11,6 +11,16 @@ namespace BudgetManagerLibrary
         // csv file :
         private string fileName;
 
+        public List<Budget> GetBudgets()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Expense> GetExpenses()
+        {
+            throw new NotImplementedException();
+        }
+
         public Budget SaveBudget(Budget budget)
         {
             fileName = "List of all budgets.csv";

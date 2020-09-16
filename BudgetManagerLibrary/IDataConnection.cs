@@ -9,5 +9,8 @@ namespace BudgetManagerLibrary
         Budget SaveBudget(Budget budget);
         Expense SaveExpense(Expense expense);
         Income SaveIncome(Income income);
+
+        List<Expense> GetExpenses();
+        List<Budget> GetBudgets();
     }
 }

@@ -22,19 +22,29 @@ namespace BudgetManager
     {
         // display those in the combobox:
         public List<Budget> budgets = new List<Budget>();
+
         private int budgetId;
 
         public ManageBudgetsWindow()
         {
             InitializeComponent();
-            budgets.Add(new Budget ("My budget", 50));
-            budgets.Add(new Budget("Hello", 60));
 
+            //TemporaryData()
+            LoadBudgets();
             existingBudgets.ItemsSource = budgets;
 
             
         }
+        public void TemporaryData()
+        {
+            budgets.Add(new Budget("My budget", 50));
+            budgets.Add(new Budget("Hello", 60));
+        }
 
+        public void LoadBudgets()
+        {
+            budgets = GlobalConfig.SQLConnection.GetBudgets();
+        }
 
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
@@ -43,7 +53,7 @@ namespace BudgetManager
 
         private void NewExpenseButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget();
+            Budget budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem==null)
             {
                 MessageBox.Show("You haven't selected a budget!");
@@ -51,7 +61,10 @@ namespace BudgetManager
             else
             {
                 budget = (Budget)existingBudgets.SelectedItem;
-                // TO DO : AddExpenses Window and pass the budget id
+                AddExpenses win = new AddExpenses(budget.Id);
+                this.Content = win.Content;
+                win.Show();
+                
             }
 
 
@@ -59,7 +72,7 @@ namespace BudgetManager
 
         private void NewIncomeButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget();
+            Budget budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem == null)
             {
                 MessageBox.Show("You haven't selected a budget!");
@@ -73,7 +86,7 @@ namespace BudgetManager
 
         private void ViewBudgetButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget();
+            Budget budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem == null)
             {
                 MessageBox.Show("You haven't selected a budget!");

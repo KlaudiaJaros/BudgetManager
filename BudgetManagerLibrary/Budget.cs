@@ -6,26 +6,24 @@ namespace BudgetManagerLibrary
 {
      public class Budget
     {
-        public string Name { get; set; }
-        public double Balance { get; set; }
         public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Balance { get; set; }
+        
         private List<Expense> Expenses = new List<Expense>();
 
-        public Budget()
+        public Budget(System.Int32 budgetId, System.String name, System.Decimal balance)
         {
+            Id = budgetId;
+            Name = name;
+            Balance = balance;
+        }
+        public Budget(string name, decimal balance)
+        {
+            Name = name;
+            Balance = balance;
+        }
 
-        }
-        public Budget(string name, double balance)
-        {
-            Name = name;
-            Balance = balance;
-        }
-        public Budget(string name, double balance, int id)
-        {
-            Name = name;
-            Balance = balance;
-            Id = id;
-        }
         public override string ToString()
         {
             return Name;
