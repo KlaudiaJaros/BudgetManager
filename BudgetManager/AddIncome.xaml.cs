@@ -48,7 +48,8 @@ namespace BudgetManager
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
                 GlobalConfig.TextFileConnection.SaveIncome(incomeEntry);
-                // TODO: edit budget balance in text file
+                // edit budget balance in text file:
+                GlobalConfig.TextFileConnection.EditBudgetBalance(budget.Id, newBalance);
 
                 // reset values:
                 incomeAmount.Text = "0";

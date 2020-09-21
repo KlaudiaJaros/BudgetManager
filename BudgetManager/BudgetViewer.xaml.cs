@@ -85,6 +85,11 @@ namespace BudgetManager
             }
         }
 
-        
+        private void addIncomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddIncome income = new AddIncome(budget);
+            income.Show();
+            this.Close();
+        }
     }
 }

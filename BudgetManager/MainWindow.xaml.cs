@@ -29,7 +29,7 @@ namespace BudgetManager
         private void manageBudgets_Click(object sender, RoutedEventArgs e)
         {
             // TODO: go to ManageBudgets Window
-            ManageBudgetsWindow window = new ManageBudgetsWindow();
+            ManageBudgetsWindow window = new ManageBudgetsWindow();            
             window.Show();
             this.Close();
         }

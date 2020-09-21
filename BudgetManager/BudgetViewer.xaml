@@ -87,7 +87,7 @@
                     </Button.Background>
                 </Button>
 
-                <Button Name="addIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income">
+                <Button Name="addIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income" Click="addIncomeButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
