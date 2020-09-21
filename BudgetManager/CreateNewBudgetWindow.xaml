@@ -43,25 +43,18 @@
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <RadioButton Name="addExpensesTrue" Content="Yes" Grid.Column="1" Grid.Row="0" Checked="addExpensesTrue_Checked" />
-                <RadioButton Name="addExpensesFalse"  Content="No" Grid.Column="2" Grid.Row="0" Checked="addExpensesFalse_Checked" />
+                <RadioButton Name="AddExpensesTrue" Content="Yes" Grid.Column="1" Grid.Row="0" Checked="AddExpensesTrue_Checked" />
+                <RadioButton Name="AddExpensesFalse"  Content="No" Grid.Column="2" Grid.Row="0" Checked="AddExpensesFalse_Checked" />
 
-                <Button Name="returnButton" Grid.Column="0" Grid.Row="2" Content="Return" Margin="10" Grid.ColumnSpan="2" Click="returnButton_Click"/>
-                <Button Name="createBudgetButton" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"  
-                        Margin="10"  Content="Create Budget" Click="createBudgetButton_Click">
+                <Button Name="ReturnButton" Grid.Column="0" Grid.Row="2" Content="Return" Margin="10" Grid.ColumnSpan="2" Click="ReturnButton_Click"/>
+                <Button Name="CreateBudgetButton" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"  
+                        Margin="10"  Content="Create Budget" Click="CreateBudgetButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
 
-
             </Grid>
-
-
-
-
         </StackPanel>
-
     </Border>
-
 </Window>

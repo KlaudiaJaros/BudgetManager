@@ -26,17 +26,17 @@
                    Text="Budget Manager" TextAlignment="Center"
                    VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
-        <Button Name="manageBudgets"  Content="Manage an existing budget" Grid.Column="1" Grid.Row="2" 
+        <Button Name="ManageBudgets"  Content="Manage an existing budget" Grid.Column="1" Grid.Row="2" 
                 VerticalAlignment="Center" Grid.ColumnSpan="2"
-                MaxWidth="400" FontSize="20" Click="manageBudgets_Click" Padding="10">
+                MaxWidth="400" FontSize="20" Click="ManageBudgets_Click" Padding="10">
             <Button.Background>
                 <SolidColorBrush Color="#FFCAE2FB"/>
             </Button.Background>
         </Button>
 
-        <Button Name="createNewBudget"  Content="Create a new budget" Grid.Column="1" Grid.Row="3" 
+        <Button Name="CreateNewBudget"  Content="Create a new budget" Grid.Column="1" Grid.Row="3" 
                 VerticalAlignment="Center" Grid.ColumnSpan="2"
-                MaxWidth="400" FontSize="20" Click="createNewBudget_Click" Padding="10">
+                MaxWidth="400" FontSize="20" Click="CreateNewBudget_Click" Padding="10">
             <Button.Background>
                 <SolidColorBrush Color="#FFCAE2FB"/>
             </Button.Background>

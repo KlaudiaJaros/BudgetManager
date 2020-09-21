@@ -20,52 +20,61 @@ namespace BudgetManager
     /// </summary>
     public partial class AddExpenses : Window
     {
-        private Budget budget { get; set; } = new Budget(null, 0);
+        private Budget Budget { get; set; } = new Budget(null, 0);
         public AddExpenses(Budget newBudget)
         {
             InitializeComponent();
-            budget = newBudget;
+            Budget = newBudget;
         }
 
-        private void finaliseExpenseButton_Click(object sender, RoutedEventArgs e)
+        private void AddNewExpenseButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: connect frequency
 
-            if (validateForm())
+            if (ValidateForm())
             {
                 double amount = double.Parse(expenseAmount.Text);
-                Expense newExpense  = new Expense(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, budget.Id );
+                Expense newExpense  = new Expense(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, Budget.Id );
 
-                /* create a expense entry for all existing connections: */
+                /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
-                Expense expenseEntry = new Expense();
+                Expense ExpenseEntry = new Expense();
                 // sql:
-                expenseEntry = GlobalConfig.SQLConnection.SaveExpense(newExpense);
+                ExpenseEntry = GlobalConfig.SQLConnection.SaveExpense(newExpense);
                 // edit budget:
-                decimal newBalance = budget.Balance - Convert.ToDecimal(expenseEntry.Amount);
-                GlobalConfig.SQLConnection.EditBudgetBalance(budget.Id, newBalance);
+                decimal newBalance = Budget.Balance - Convert.ToDecimal(ExpenseEntry.Amount);
+                GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
 
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
-                GlobalConfig.TextFileConnection.SaveExpense(expenseEntry);
+                GlobalConfig.TextFileConnection.SaveExpense(ExpenseEntry);
                 // edit budget balance in the text file:
-                GlobalConfig.TextFileConnection.EditBudgetBalance(budget.Id, newBalance);
+                GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
 
-                // reset values:
-                expenseAmount.Text = "0";
-                expenseName.Text = "My Expense";
-                expenseCategory.SelectedItem = null;
-                expenseDate.SelectedDate = null;
-                expenseFrequency.SelectedItem = null;
-
-                // TODO: open ViewBudgetWindow
-                MainWindow window = new MainWindow();
-                window.Show();
-                this.Close();
+                Button anotherExpense = (Button)sender;
+                if (anotherExpense.Name == "NewExpenseButton")
+                {
+                    // reset values:
+                    expenseAmount.Text = "0";
+                    expenseName.Text = "My Expense";
+                    expenseCategory.SelectedItem = null;
+                    expenseDate.SelectedDate = null;
+                    expenseFrequency.SelectedItem = null;
+                }
+                else
+                {
+                    MainWindow window = new MainWindow();
+                    window.Show();
+                    this.Close();
+                }
             }
         }
 
-        private bool validateForm()
+        /// <summary>
+        /// A method that checks every field from the AddExpenses form and validates the user input. If the input is incorrect, an appropriate message box will be dispayed.
+        /// </summary>
+        /// <returns> True if the form was filled correctly, otherwise false. </returns>
+        private bool ValidateForm()
         {
             bool output = true;
             double amount = 0;
@@ -78,7 +87,6 @@ namespace BudgetManager
             {
                 output = false;
                 MessageBox.Show("Invalid amount. Please enter a valid number.");
-                // double range
             }
 
             if (expenseName.Text.Length == 0 || expenseName.Text.Length > 50)
@@ -108,7 +116,7 @@ namespace BudgetManager
             return output;
         }
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
             window.Show();

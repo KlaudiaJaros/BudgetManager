@@ -21,75 +21,67 @@ namespace BudgetManager
     /// </summary>
     public partial class BudgetViewer : Window
     {
-        private Budget budget { get; set; } = new Budget(null, 0);
+        private Budget Budget { get; set; } = new Budget(null, 0);
         public BudgetViewer(Budget passedBudget)
         {
             InitializeComponent();
 
-            budget = passedBudget;
-            budgetNameBox.Text = budget.Name;
-            budgetBalanceBox.Text = budget.Balance.ToString();
+            Budget = passedBudget;
+            budgetNameBox.Text = Budget.Name;
+            budgetBalanceBox.Text = Budget.Balance.ToString();
         }
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: return to MainWindow
             MainWindow window = new MainWindow();
             window.Show();
             this.Close();
         }
 
-        private void addExpensesButton_Click(object sender, RoutedEventArgs e)
+        private void AddExpensesButton_Click(object sender, RoutedEventArgs e)
         {
-            AddExpenses win = new AddExpenses(budget);
+            AddExpenses win = new AddExpenses(Budget);
             win.Show();
             this.Close();
-            // TODO: fix the window connection
+        }
+        private void AddIncomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddIncome income = new AddIncome(Budget);
+            income.Show();
+            this.Close();
         }
 
-        private void deleteBudget_Click(object sender, RoutedEventArgs e)
+        private void DeleteBudget_Click(object sender, RoutedEventArgs e)
         {
-            // Configure the message box to be displayed
-            string messageBoxText = "Do you want to delete budget " + budget.ToString() + "?";
+            // Configure the message box to be displayed:
+            string messageBoxText = "Do you want to delete budget " + Budget.ToString() + "?";
             string caption = "Warning";
             MessageBoxButton button = MessageBoxButton.YesNoCancel;
             MessageBoxImage icon = MessageBoxImage.Warning;
 
-            // Display message box
+            // Display message box:
             MessageBoxResult result = System.Windows.MessageBox.Show(messageBoxText, caption, button, icon);
 
-            // Process message box results
+            // Process message box results:
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    // User pressed Yes button
-                    GlobalConfig.SQLConnection.DeleteBudget(budget.Id);
-                    GlobalConfig.TextFileConnection.DeleteBudget(budget.Id);
-                    
+                    // User pressed Yes button, call deletion methods:
+                    GlobalConfig.SQLConnection.DeleteBudget(Budget.Id);
+                    GlobalConfig.TextFileConnection.DeleteBudget(Budget.Id);
                     System.Windows.MessageBox.Show("Budget deleted successfully.");
                                     
-                    // TODO: return to MainWindow
                     MainWindow window = new MainWindow();
                     window.Show();
                     this.Close();
-
                     break;
                 case MessageBoxResult.No:
                     // User pressed No button
-                    // ...
                     break;
                 case MessageBoxResult.Cancel:
                     // User pressed Cancel button
-                    // ...
                     break;
             }
-        }
-
-        private void addIncomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddIncome income = new AddIncome(budget);
-            income.Show();
-            this.Close();
         }
     }
 }

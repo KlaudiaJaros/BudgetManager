@@ -56,16 +56,16 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Name="returnButton" Grid.Column="0" Grid.Row="2" Content="Return" Margin="10" Click="returnButton_Click" />
-                <Button Name="newIncomeButton" Grid.Column="1" Grid.Row="2" Content="Another income" 
-                        Margin="10" >
+                <Button Name="ReturnButton" Grid.Column="0" Grid.Row="2" Content="Return" Margin="10" Click="ReturnButton_Click" />
+                <Button Name="NewIncomeButton" Grid.Column="1" Grid.Row="2" Content="Another income" 
+                        Click="AddNewIncomeButton_Click" Margin="10" >
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
 
-                <Button Name="finaliseButton" Grid.Column="2" Grid.Row="2"   
-                        Margin="10"  Content="Finalise" Click="finaliseButton_Click">
+                <Button Name="FinaliseButton" Grid.Column="2" Grid.Row="2"   
+                        Margin="10"  Content="Finalise" Click="AddNewIncomeButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>

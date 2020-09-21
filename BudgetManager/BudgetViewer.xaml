@@ -79,22 +79,22 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Name="returnButton" Grid.Column="0" Grid.Row="0" Content="Return" Margin="10" Click="returnButton_Click"/>
-                <Button Name="deleteBudget" Grid.Column="1" Grid.Row="0"   
-                        Margin="10"  Content="Delete Budget" Click="deleteBudget_Click">
+                <Button Name="ReturnButton" Grid.Column="0" Grid.Row="0" Content="Return" Margin="10" Click="ReturnButton_Click"/>
+                <Button Name="DeleteBudget" Grid.Column="1" Grid.Row="0"   
+                        Margin="10"  Content="Delete Budget" Click="DeleteBudget_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFF38E8E"/>
                     </Button.Background>
                 </Button>
 
-                <Button Name="addIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income" Click="addIncomeButton_Click">
+                <Button Name="AddIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income" Click="AddIncomeButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
                 
-                <Button Name="addExpensesButton" Grid.Column="3" Grid.Row="0"   
-                        Margin="10"  Content="Add Expenses" Click="addExpensesButton_Click">
+                <Button Name="AddExpensesButton" Grid.Column="3" Grid.Row="0"   
+                        Margin="10"  Content="Add Expenses" Click="AddExpensesButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>

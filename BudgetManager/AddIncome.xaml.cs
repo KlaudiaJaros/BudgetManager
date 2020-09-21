@@ -20,51 +20,57 @@ namespace BudgetManager
     /// </summary>
     public partial class AddIncome : Window
     {
-        private Budget budget { get; set; } = new Budget(null, 0);
+        private Budget Budget { get; set; } = new Budget(null, 0);
         public AddIncome(Budget newBudget)
         {
             InitializeComponent();
-            // TODO: connect the actual budget ID !!
-            budget = newBudget;
+            Budget = newBudget;
         }
-        private void finaliseButton_Click(object sender, RoutedEventArgs e)
+        private void AddNewIncomeButton_Click(object sender, RoutedEventArgs e)
         {
-
-
-            if (validateForm())
+            if (ValidateForm())
             {
                 double amount = double.Parse(incomeAmount.Text);
-                Income newIncome = new Income(incomeName.Text, amount, incomeDate.SelectedDate, budget.Id);
+                Income newIncome = new Income(incomeName.Text, amount, incomeDate.SelectedDate, Budget.Id);
 
-                /* create a expense entry for all existing connections: */
+                /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
                 Income incomeEntry = new Income();
                 // sql:
                 incomeEntry = GlobalConfig.SQLConnection.SaveIncome(newIncome);
                 // edit budget balance (add Income to it) :
-                decimal newBalance = budget.Balance + Convert.ToDecimal(incomeEntry.Amount);
-                GlobalConfig.SQLConnection.EditBudgetBalance(budget.Id, newBalance);
+                decimal newBalance = Budget.Balance + Convert.ToDecimal(incomeEntry.Amount);
+                GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
 
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
                 GlobalConfig.TextFileConnection.SaveIncome(incomeEntry);
                 // edit budget balance in text file:
-                GlobalConfig.TextFileConnection.EditBudgetBalance(budget.Id, newBalance);
+                GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
 
-                // reset values:
-                incomeAmount.Text = "0";
-                incomeName.Text = "My Income";
-                incomeDate.SelectedDate = null;
-                incomeFrequency.SelectedItem = null;
-
-
-                // TODO: open ViewBudgetWindow
-                MainWindow window = new MainWindow();
-                window.Show();
-                this.Close();
+                Button income = (Button)sender;
+                if (income.Name == "NewIncomeButton")
+                {
+                    // reset values:
+                    incomeAmount.Text = "0";
+                    incomeName.Text = "My Income";
+                    incomeDate.SelectedDate = null;
+                    incomeFrequency.SelectedItem = null;
+                }
+                else
+                {
+                    MainWindow window = new MainWindow();
+                    window.Show();
+                    this.Close();
+                }
             }
         }
-        private bool validateForm()
+
+        /// <summary>
+        /// A method that checks every field from the AddIncome form and validates the user input. If the input is incorrect, an appropriate message box will be dispayed.
+        /// </summary>
+        /// <returns> True if the form was filled correctly, otherwise false. </returns>
+        private bool ValidateForm()
         {
             bool output = true;
             double amount = 0;
@@ -77,7 +83,6 @@ namespace BudgetManager
             {
                 output = false;
                 MessageBox.Show("Invalid amount. Please enter a valid number.");
-                // double range
             }
 
             if (incomeName.Text.Length == 0 || incomeName.Text.Length > 50)
@@ -101,7 +106,7 @@ namespace BudgetManager
             return output;
         }
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
             window.Show();

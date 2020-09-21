@@ -27,14 +27,17 @@ namespace BudgetManager
             InitializeComponent();
         }
 
-        private void createBudgetButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// A method that creates a budget and saves it to a SQL db and a text file provided the form was filled correctly.
+        /// </summary>
+        private void CreateBudgetButton_Click(object sender, RoutedEventArgs e)
         {
-            if (validateForm())
+            if (ValidateForm())
             {
                 decimal balance = decimal.Parse(startingBalance.Text);
                 Budget newBudget = new Budget(budgetName.Text, balance);
 
-                /* create a budget entry for all existing connections: */
+                /* Create a budget entry for all existing connections: */
                 // temporary budget instance:
                 Budget budgetEntry = new Budget(null, 0);
                 // sql:
@@ -47,37 +50,26 @@ namespace BudgetManager
                 startingBalance.Text = "0";
                 budgetName.Text = "My Budget";
 
-                
                 if (addExpense)
                 {
-                    // TODO: go to the AddExpenses window
                     AddExpenses window = new AddExpenses(budgetEntry);
                     window.Show();
                     this.Close();
-                    
                 }
                 else
                 {
-                    // TODO: go to the BudgetViewer window
                     BudgetViewer view = new BudgetViewer(budgetEntry);
                     view.Show();
                     this.Close();
-
                 }
-
             }
         }
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: go to the Main window
-            MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
-
-        }
-
-        private bool validateForm()
+        /// <summary>
+        /// A method that checks every field from the CreateNewBudgetWindow form and validates the user input. If the input is incorrect, an appropriate message box will be dispayed.
+        /// </summary>
+        /// <returns> True if the form was filled correctly, otherwise false. </returns>
+        private bool ValidateForm()
         {
             bool output = true;
             double balance = 0;
@@ -90,7 +82,6 @@ namespace BudgetManager
             {
                 output = false;
                 MessageBox.Show("Invalid starting balance. Please enter a valid number.");
-                // integer range: -2,147,483,648 to 2,147,483,647
             }
             // assumption: balance can be negative
 
@@ -99,18 +90,24 @@ namespace BudgetManager
                 output = false;
                 MessageBox.Show("Invalid name. Please enter a valid name with 1-100 characters.");
             }
-
             return output;
         }
 
-        private void addExpensesTrue_Checked(object sender, RoutedEventArgs e)
+        private void AddExpensesTrue_Checked(object sender, RoutedEventArgs e)
         {
             addExpense = true;
         }
 
-        private void addExpensesFalse_Checked(object sender, RoutedEventArgs e)
+        private void AddExpensesFalse_Checked(object sender, RoutedEventArgs e)
         {
             addExpense = false;
+        }
+
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

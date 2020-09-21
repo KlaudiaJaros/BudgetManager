@@ -20,84 +20,83 @@ namespace BudgetManager
     /// </summary>
     public partial class ManageBudgetsWindow : Window
     {
-        // display those in the combobox:
+        // To display budgets from SQL db in the Combobox:
         public List<Budget> budgets = new List<Budget>();
 
         public ManageBudgetsWindow()
         {
             InitializeComponent();
 
-            //TemporaryData()
             LoadBudgets();
             existingBudgets.ItemsSource = budgets;
-
-            
-        }
-        public void TemporaryData()
-        {
-            budgets.Add(new Budget("My budget", 50));
-            budgets.Add(new Budget("Hello", 60));
         }
 
+        /// <summary>
+        /// A method that saves a list of all budgets that are stored in the SQL database in the budgets property of this class.
+        /// </summary>
         public void LoadBudgets()
         {
             budgets = GlobalConfig.SQLConnection.GetBudgets();
         }
 
-        private void returnButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: return to MainWindow
             MainWindow window = new MainWindow();
             window.Show();
             this.Close();
         }
 
+        /// <summary>
+        /// A method that opens AddExpenses window provided the user selected a budget from the ComboBox.
+        /// </summary>
         private void NewExpenseButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget(null, 0);
+            Budget Budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem==null)
             {
                 MessageBox.Show("You haven't selected a budget!");
             }
             else
             {
-                budget = (Budget)existingBudgets.SelectedItem;
-                AddExpenses win = new AddExpenses(budget);
+                Budget = (Budget)existingBudgets.SelectedItem;
+                AddExpenses win = new AddExpenses(Budget);
                 win.Show();
                 this.Close();  
-                // TODO: fix the window connection
             }
         }
-
+        /// <summary>
+        /// A method that opens AddIncome window provided the user selected a budget from the ComboBox.
+        /// </summary>
         private void NewIncomeButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget(null, 0);
+            Budget Budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem == null)
             {
                 MessageBox.Show("You haven't selected a budget!");
             }
             else
             {
-                budget = (Budget)existingBudgets.SelectedItem;
-                AddIncome win = new AddIncome(budget);
+                Budget = (Budget)existingBudgets.SelectedItem;
+                AddIncome win = new AddIncome(Budget);
                 win.Show();
                 this.Close();
-                    //TODO: fix the window connection
             }
         }
 
+        /// <summary>
+        /// A method that opens BudgetViewer window provided the user selected a budget from the ComboBox.
+        /// </summary>
         private void ViewBudgetButton_Click(object sender, RoutedEventArgs e)
         {
-            Budget budget = new Budget(null, 0);
+            Budget Budget = new Budget(null, 0);
             if (existingBudgets.SelectedItem == null)
             {
                 MessageBox.Show("You haven't selected a budget!");
             }
             else
             {
-                budget = (Budget)existingBudgets.SelectedItem;
-                // // TODO: viewBudgetWindow with the selected budget
-                BudgetViewer view = new BudgetViewer(budget);
+                Budget = (Budget)existingBudgets.SelectedItem;
+                BudgetViewer view = new BudgetViewer(Budget);
                 view.Show();
                 this.Close();
             }
