@@ -23,8 +23,6 @@ namespace BudgetManager
         // display those in the combobox:
         public List<Budget> budgets = new List<Budget>();
 
-        private int budgetId;
-
         public ManageBudgetsWindow()
         {
             InitializeComponent();
@@ -64,7 +62,7 @@ namespace BudgetManager
             else
             {
                 budget = (Budget)existingBudgets.SelectedItem;
-                AddExpenses win = new AddExpenses(budget.Id);
+                AddExpenses win = new AddExpenses(budget);
                 win.Show();
                 this.Close();  
                 // TODO: fix the window connection
@@ -81,7 +79,7 @@ namespace BudgetManager
             else
             {
                 budget = (Budget)existingBudgets.SelectedItem;
-                AddIncome win = new AddIncome(budget.Id);
+                AddIncome win = new AddIncome(budget);
                 win.Show();
                 this.Close();
                     //TODO: fix the window connection
@@ -99,6 +97,9 @@ namespace BudgetManager
             {
                 budget = (Budget)existingBudgets.SelectedItem;
                 // // TODO: viewBudgetWindow with the selected budget
+                BudgetViewer view = new BudgetViewer(budget);
+                view.Show();
+                this.Close();
             }
         }
     }

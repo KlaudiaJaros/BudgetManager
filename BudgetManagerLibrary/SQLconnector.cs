@@ -111,5 +111,31 @@ namespace BudgetManagerLibrary
             }
             return output;
         }
+
+        public void EditBudgetBalance(int budgetId, decimal budgetBalance)
+        {
+            // establish the connection:
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                /* first, store all parameters to be passed in a var p: */
+                p.Add("@budgetId", budgetId);
+                p.Add("@newBalance", budgetBalance);
+
+                /* using Execute method, pass the stored procedure name, var p (all of the parameters) and a command type: */
+                connection.Execute("dbo.spEditBudgetBalance", p, commandType: CommandType.StoredProcedure);               
+            }
+        }
+
+        public void DeleteBudget(int budgetId)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@delBudgetId", budgetId);
+
+                connection.Execute("dbo.spDeleteBudgetAndRelatedItems", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

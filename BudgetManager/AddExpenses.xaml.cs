@@ -20,13 +20,11 @@ namespace BudgetManager
     /// </summary>
     public partial class AddExpenses : Window
     {
-        private int budgetId;
-        public AddExpenses(int newBudgetId)
+        private Budget budget { get; set; } = new Budget(null, 0);
+        public AddExpenses(Budget newBudget)
         {
             InitializeComponent();
-            // TODO: connect the actual budget ID !!
-            budgetId = newBudgetId;
-
+            budget = newBudget;
         }
 
         private void finaliseExpenseButton_Click(object sender, RoutedEventArgs e)
@@ -36,16 +34,21 @@ namespace BudgetManager
             if (validateForm())
             {
                 double amount = double.Parse(expenseAmount.Text);
-                Expense newExpense  = new Expense(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, budgetId );
+                Expense newExpense  = new Expense(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, budget.Id );
 
                 /* create a expense entry for all existing connections: */
                 // temporary expense instance:
                 Expense expenseEntry = new Expense();
                 // sql:
                 expenseEntry = GlobalConfig.SQLConnection.SaveExpense(newExpense);
+                // edit budget:
+                decimal newBalance = budget.Balance - Convert.ToDecimal(expenseEntry.Amount);
+                GlobalConfig.SQLConnection.EditBudgetBalance(budget.Id, newBalance);
+
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
                 GlobalConfig.TextFileConnection.SaveExpense(expenseEntry);
+                // TODO: edit budget balance in the text file
 
                 // reset values:
                 expenseAmount.Text = "0";

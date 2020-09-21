@@ -12,5 +12,7 @@ namespace BudgetManagerLibrary
 
         List<Expense> GetExpenses();
         List<Budget> GetBudgets();
+        void EditBudgetBalance(int budgetId, decimal budgetBalance);
+        void DeleteBudget(int budgetId);
     }
 }

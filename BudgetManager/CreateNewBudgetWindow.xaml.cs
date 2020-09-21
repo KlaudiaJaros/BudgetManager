@@ -51,7 +51,7 @@ namespace BudgetManager
                 if (addExpense)
                 {
                     // TODO: go to the AddExpenses window
-                    AddExpenses window = new AddExpenses(budgetEntry.Id);
+                    AddExpenses window = new AddExpenses(budgetEntry);
                     window.Show();
                     this.Close();
                     
@@ -59,7 +59,10 @@ namespace BudgetManager
                 else
                 {
                     // TODO: go to the BudgetViewer window
-                    
+                    BudgetViewer view = new BudgetViewer(budgetEntry);
+                    view.Show();
+                    this.Close();
+
                 }
 
             }

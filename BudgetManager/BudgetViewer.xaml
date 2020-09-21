@@ -34,10 +34,10 @@
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="......" HorizontalAlignment="Center"/>
                 
                 <!-- to fill with actual data : -->
-                <TextBox Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBox Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBox Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBox Name="blank" Grid.Column="1" Grid.Row="4" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="blank" Grid.Column="1" Grid.Row="4" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
            
                 <!-- for visual expense evaluation - pie chart maybe -->
                 <Canvas  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" 
@@ -79,13 +79,27 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Name="returnButton" Grid.Column="0" Grid.Row="0" Content="Return" Margin="10" Grid.ColumnSpan="2"/>
-                <Button Name="createBudgetButton" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2"  
-                        Margin="10"  Content="Add Expenses">
+                <Button Name="returnButton" Grid.Column="0" Grid.Row="0" Content="Return" Margin="10" Click="returnButton_Click"/>
+                <Button Name="deleteBudget" Grid.Column="1" Grid.Row="0"   
+                        Margin="10"  Content="Delete Budget" Click="deleteBudget_Click">
+                    <Button.Background>
+                        <SolidColorBrush Color="#FFF38E8E"/>
+                    </Button.Background>
+                </Button>
+
+                <Button Name="addIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
+                
+                <Button Name="addExpensesButton" Grid.Column="3" Grid.Row="0"   
+                        Margin="10"  Content="Add Expenses" Click="addExpensesButton_Click">
+                    <Button.Background>
+                        <SolidColorBrush Color="#FFCAE2FB"/>
+                    </Button.Background>
+                </Button>
+
             </Grid>
 
         </StackPanel>

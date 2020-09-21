@@ -11,6 +11,31 @@ namespace BudgetManagerLibrary
         // csv file :
         private string fileName;
 
+        public void DeleteBudget(int budgetId)
+        {
+            fileName = "Budget no " + budgetId + ".csv";
+            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            // TODO: edit the list of all budgets and delete the right budget
+            /*
+            fileName = "List of all budgets.csv";
+            path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+            string search = "BUDGET," + budgetId;
+            while (File.ReadAllLines(path) != null)
+            {
+                
+            } */
+        }
+
+        public void EditBudgetBalance(int budgetId, decimal budgetBalance)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Budget> GetBudgets()
         {
             throw new NotImplementedException();

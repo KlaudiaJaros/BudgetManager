@@ -26,7 +26,8 @@ namespace BudgetManagerLibrary
 
         public override string ToString()
         {
-            return Name;
+            string editedName = Name.TrimEnd();
+            return editedName;
         }
 
 
