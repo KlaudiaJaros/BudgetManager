@@ -24,19 +24,19 @@ namespace BudgetManager
     {
         private Budget Budget { get; set; } = new Budget(null, 0);
         private List<Entry> Entries = new List<Entry>();
-        //private List<Expense> Expenses { get; set; } = new List<Expense>();
-        //private List<Income> Incomes { get; set; } = new List<Income>();
+
         public BudgetViewer(Budget passedBudget)
         {
             InitializeComponent();
 
             Budget = passedBudget;
             budgetNameBox.Text = Budget.Name;
-            budgetBalanceBox.Text = Budget.Balance.ToString();
+            // TODO: budget balance display is incorrect
+            budgetBalanceBox.Text = Budget.Balance.ToString("F");
+            // TODO: display 'spent this month'
 
             LoadData();
             dataGrid.DataContext = Entries; 
-            // TODO: fix shit
         } 
 
         private void LoadData()

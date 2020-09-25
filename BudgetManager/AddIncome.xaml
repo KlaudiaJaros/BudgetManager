@@ -21,6 +21,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="0" FontSize="20"
@@ -29,20 +30,28 @@
                 <TextBlock Text="Amount (£):" Grid.Column="0" Grid.Row="1" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <TextBox Name="incomeAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="1150" FontFamily="Segoe UI Semilight"/>
-
-                <TextBlock Text="Date:" Grid.Column="0" Grid.Row="2" FontSize="20"
+                <TextBlock Text="Category:" Grid.Column="0" Grid.Row="2" FontSize="20"
                        HorizontalAlignment="Center"/>
-                <!-- <ComboBox Name="expenseDate" Grid.Column="1" Grid.Row="3"/> -->
-                <DatePicker Name="incomeDate"  Grid.Column="1" Grid.Row="2"/>
-                <TextBlock Text="Is it reoccuring?" Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>
-                <ComboBox Name="incomeFrequency" Grid.Column="1" Grid.Row="3" SelectedIndex="1">
+                <ComboBox Name="incomeCategory" Grid.Column="1" Grid.Row="2">
+                    <ComboBoxItem>Salary </ComboBoxItem>
+                    <ComboBoxItem>Savings</ComboBoxItem>
+                    <ComboBoxItem>Loan</ComboBoxItem>
+                    <ComboBoxItem>Other</ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Date:" Grid.Column="0" Grid.Row="3" FontSize="20"
+                       HorizontalAlignment="Center"/>
+                <DatePicker Name="incomeDate"  Grid.Column="1" Grid.Row="3"/>
+                
+                <!-- TODO: in the future: add frequency and reoccuring entries:
+                <TextBlock Text="Is it reoccuring?" Grid.Row="4" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>
+                <ComboBox Name="incomeFrequency" Grid.Column="1" Grid.Row="4" SelectedIndex="1">
                     <ComboBoxItem>No</ComboBoxItem>
                     <ComboBoxItem>Weekly</ComboBoxItem>
                     <ComboBoxItem>Monthly</ComboBoxItem>
                     <ComboBoxItem>Yearly</ComboBoxItem>
                     <ComboBoxItem>Daily</ComboBoxItem>
                     <ComboBoxItem>Fortnightly</ComboBoxItem>
-                </ComboBox>
+                </ComboBox> -->
 
             </Grid>
 

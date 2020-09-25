@@ -34,5 +34,10 @@ namespace BudgetManagerLibrary.Business_Objects
         {
 
         }
+        public override string ToString()
+        {
+            string editedName = Name.TrimEnd();
+            return editedName;
+        }
     }
 }

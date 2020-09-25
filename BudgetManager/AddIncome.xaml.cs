@@ -32,7 +32,7 @@ namespace BudgetManager
             if (ValidateForm())
             {
                 double amount = double.Parse(incomeAmount.Text);
-                Entry newIncome = new Entry(incomeName.Text, amount, null, incomeDate.SelectedDate, Budget.Id);
+                Entry newIncome = new Entry(incomeName.Text, amount, incomeCategory.Text, incomeDate.SelectedDate, Budget.Id);
 
                 /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
@@ -57,11 +57,10 @@ namespace BudgetManager
                     incomeAmount.Text = "0";
                     incomeName.Text = "My Income";
                     incomeDate.SelectedDate = null;
-                    incomeFrequency.SelectedItem = null;
                 }
                 else
                 {
-                    MainWindow window = new MainWindow();
+                    BudgetViewer window = new BudgetViewer(Budget);
                     window.Show();
                     this.Close();
                 }
@@ -92,18 +91,23 @@ namespace BudgetManager
                 output = false;
                 MessageBox.Show("Invalid name. Please enter a valid name with 1-50 characters.");
             }
-
+            if (incomeCategory.SelectedItem == null)
+            {
+                output = false;
+                MessageBox.Show("Please select a category.");
+            }
             if (incomeDate.SelectedDate == null)
             {
                 output = false;
                 MessageBox.Show("Please select a date.");
             }
 
+            /* TODO: connect frequency in the future
             if (incomeFrequency.SelectedItem == null)
             {
                 output = false;
                 MessageBox.Show("Please choose frequency.");
-            }
+            } */
 
             return output;
         }

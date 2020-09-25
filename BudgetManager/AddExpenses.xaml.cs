@@ -30,8 +30,6 @@ namespace BudgetManager
 
         private void AddNewExpenseButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: connect frequency
-
             if (ValidateForm())
             {
                 double amount = double.Parse(expenseAmount.Text);
@@ -61,11 +59,10 @@ namespace BudgetManager
                     expenseName.Text = "My Expense";
                     expenseCategory.SelectedItem = null;
                     expenseDate.SelectedDate = null;
-                    expenseFrequency.SelectedItem = null;
                 }
                 else
                 {
-                    MainWindow window = new MainWindow();
+                    BudgetViewer window = new BudgetViewer(Budget);
                     window.Show();
                     this.Close();
                 }
@@ -109,11 +106,12 @@ namespace BudgetManager
                 MessageBox.Show("Please select a date.");
             }
 
+            /* TODO: connect frequency in the future
             if (expenseFrequency.SelectedItem == null)
             {
                 output = false;
                 MessageBox.Show("Please choose frequency.");
-            }
+            } */
 
             return output;
         }

@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="Budget Manager - Budget Panel" Height="564.13" Width="860.87" FontSize="18" Icon="BM_icon_v2.ico">
+        Title="Budget Manager - Budget Panel" Height="662.554" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico">
 
     <Border Padding="15">
         <StackPanel>
             <TextBlock Text="Budget Panel " FontSize="30" FontWeight="DemiBold" Padding="15"/>
+            <!-- summary: -->
             <Grid Margin="0,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -26,49 +27,38 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Text="Summary" 
-                           HorizontalAlignment="Center" FontWeight="SemiBold" Padding="8"/>
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Balance:" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="Spent this month:" HorizontalAlignment="Center"/>
-                
-                
+                <TextBlock Margin="25,10"  Grid.Column="0" Grid.Row="0" Text="Summary" 
+                            FontWeight="SemiBold" FontSize="21"/>
+                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
+                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>
+                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="3" Text="Spent this month:" />
+
+
                 <!-- to fill with actual data : -->
                 <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                           
+
                 <!-- for visual expense evaluation - pie chart maybe -->
                 <Canvas  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" 
                          Grid.RowSpan="5" VerticalAlignment="Top" />
             </Grid>
-            
+
             <!-- history header: -->
             <Grid Margin="0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock  Text="History" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" 
-                            HorizontalAlignment="Center" FontWeight="SemiBold" Padding="8"/>
-
-                <!--
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Date" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="Name" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="Amount" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Row="1" Grid.Column="3" Text="Category" HorizontalAlignment="Center"/>
-                -->
+                <TextBlock  Text="History" FontSize="21" Margin="25,10"  Grid.Column="0" Grid.Row="0" FontWeight="SemiBold"/>
             </Grid>
 
             <!-- hisotry contents:  -->
             <Grid>
-                <DataGrid Name="dataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                <DataGrid Name="dataGrid" IsReadOnly="True" CanUserReorderColumns="False" CanUserAddRows="False" 
+                          MaxHeight="200" HorizontalScrollBarVisibility="Auto" SelectionMode="Single" ItemsSource="{Binding}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
@@ -78,6 +68,7 @@
                 </DataGrid>
             </Grid>
 
+            <!-- bottom menu: -->
             <Grid Margin="0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -102,7 +93,7 @@
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
-                
+
                 <Button Name="AddExpensesButton" Grid.Column="3" Grid.Row="0"   
                         Margin="10"  Content="Add Expenses" Click="AddExpensesButton_Click">
                     <Button.Background>
@@ -111,9 +102,6 @@
                 </Button>
 
             </Grid>
-            
-
         </StackPanel>
     </Border>
-
 </Window>

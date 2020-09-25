@@ -47,7 +47,8 @@
                 <TextBlock Text="Date:" Grid.Column="0" Grid.Row="3" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <DatePicker Name="expenseDate"  Grid.Column="1" Grid.Row="3"/>
-                
+
+                <!--  TODO: in the future: add frequency and reoccuring entries:
                 <TextBlock Text="Is it reoccuring?" Grid.Row="4" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>
                 <ComboBox Name="expenseFrequency" Grid.Column="1" Grid.Row="4" SelectedIndex="1">
                     <ComboBoxItem>No</ComboBoxItem>
@@ -56,7 +57,7 @@
                     <ComboBoxItem>Yearly</ComboBoxItem>
                     <ComboBoxItem>Daily</ComboBoxItem>
                     <ComboBoxItem>Fortnightly</ComboBoxItem>
-                </ComboBox>
+                </ComboBox> -->
 
 
             </Grid>
