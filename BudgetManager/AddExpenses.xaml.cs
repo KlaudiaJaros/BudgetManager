@@ -1,4 +1,5 @@
 ﻿using BudgetManagerLibrary;
+using BudgetManagerLibrary.Business_Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,20 +35,21 @@ namespace BudgetManager
             if (ValidateForm())
             {
                 double amount = double.Parse(expenseAmount.Text);
-                Expense newExpense  = new Expense(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, Budget.Id );
+                amount -= amount * 2; // ?
+                Entry newExpense  = new Entry(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, Budget.Id );
 
                 /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
-                Expense ExpenseEntry = new Expense();
+                Entry ExpenseEntry = new Entry();
                 // sql:
-                ExpenseEntry = GlobalConfig.SQLConnection.SaveExpense(newExpense);
+                ExpenseEntry = GlobalConfig.SQLConnection.SaveEntry(newExpense);
                 // edit budget:
-                decimal newBalance = Budget.Balance - Convert.ToDecimal(ExpenseEntry.Amount);
+                decimal newBalance = Budget.Balance + Convert.ToDecimal(ExpenseEntry.Amount);
                 GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
 
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
-                GlobalConfig.TextFileConnection.SaveExpense(ExpenseEntry);
+                GlobalConfig.TextFileConnection.SaveEntry(ExpenseEntry);
                 // edit budget balance in the text file:
                 GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
 

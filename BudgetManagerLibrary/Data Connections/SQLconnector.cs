@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using BudgetManagerLibrary.Business_Objects;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,10 @@ namespace BudgetManagerLibrary
 {
     public class SQLconnector : IDataConnection
     {
+        // CHANGE DATABASE NAME if using a different one:
         private const string DatabaseName = "BudgetManagerDB";
+
+
         /// <summary>
         /// Saves a new budget to the database.
         /// </summary>
@@ -37,69 +41,6 @@ namespace BudgetManagerLibrary
 
                 return budget;
             }
-
-        }
-
-        public Expense SaveExpense(Expense expense)
-        {
-
-            // establish the connection:
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
-            {
-                var p = new DynamicParameters();
-                /* passing the parameters for the stored procedure in the server manager spExpense_Insert  */
-                /* first, store all parameters to be passed in a var p: */
-                p.Add("@expenseName", expense.Name);
-                p.Add("@expenseAmount", expense.Amount);
-                p.Add("@expenseCategory", expense.Category);
-                p.Add("@expenseDate", expense.Date);
-                p.Add("@expenseBudgetId", expense.BudgetID);
-                // we are getting the id back here:
-                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                /* using Execute method, pass the stored procedure name, var p (all of the parameters) and a command type: */
-                connection.Execute("dbo.spExpense_Insert", p, commandType: CommandType.StoredProcedure);
-
-                /* save the id in the expense using Get<dataType>(@SQL parameter name) : */
-                expense.Id = p.Get<int>("@id");
-
-                return expense;
-            }
-        }
-
-        public Income SaveIncome(Income income)
-        {
-            // establish the connection:
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
-            {
-                var p = new DynamicParameters();
-                /* passing the parameters for the stored procedure in the server manager spExpense_Insert  */
-                /* first, store all parameters to be passed in a var p: */
-                p.Add("@incomeName", income.Name);
-                p.Add("@incomeAmount", income.Amount);
-                p.Add("@incomeDate", income.Date);
-                p.Add("@incomeBudgetId", income.BudgetID);
-                // we are getting the id back here:
-                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                /* using Execute method, pass the stored procedure name, var p (all of the parameters) and a command type: */
-                connection.Execute("dbo.spIncome_Insert", p, commandType: CommandType.StoredProcedure);
-
-                /* save the id in the expense using Get<dataType>(@SQL parameter name) : */
-                income.Id = p.Get<int>("@id");
-
-                return income;
-            }
-        }
-
-        public List<Expense> GetExpenses()
-        {
-            List<Expense> output;
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
-            {
-                output = connection.Query<Expense>("dbo.spExpenses_GetAll").ToList();
-            }
-            return output;
         }
 
         public List<Budget> GetBudgets()
@@ -123,7 +64,7 @@ namespace BudgetManagerLibrary
                 p.Add("@newBalance", budgetBalance);
 
                 /* using Execute method, pass the stored procedure name, var p (all of the parameters) and a command type: */
-                connection.Execute("dbo.spEditBudgetBalance", p, commandType: CommandType.StoredProcedure);               
+                connection.Execute("dbo.spEditBudgetBalance", p, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -134,7 +75,50 @@ namespace BudgetManagerLibrary
                 var p = new DynamicParameters();
                 p.Add("@delBudgetId", budgetId);
 
-                connection.Execute("dbo.spDeleteBudgetAndRelatedItems", p, commandType: CommandType.StoredProcedure);
+                connection.Execute("dbo.spDeleteBudgetAll", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public List<Entry> GetEntries()
+        {
+            List<Entry> output;
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                output = connection.Query<Entry>("dbo.spEntry_GetAll").ToList();
+            }
+            return output;
+        }
+
+        public List<Entry> GetEntriesByDate(int budgetId)
+        {
+            List<Entry> output;
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                /* first, store all parameters to be passed in a var p: */
+                p.Add("@budgetId", budgetId);
+
+                output = connection.Query<Entry>("dbo.spEntry_GetByDate", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public Entry SaveEntry(Entry entry)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@entryName", entry.Name);
+                p.Add("@entryAmount", entry.Amount);
+                p.Add("@entryCategory", entry.Category);
+                p.Add("@entryDate", entry.Date);
+                p.Add("@entryBudgetId", entry.BudgetID);
+                // get the ID back:
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spEntry_Insert", p, commandType: CommandType.StoredProcedure);
+                entry.Id = p.Get<int>("@id");
+
+                return entry;
             }
         }
     }

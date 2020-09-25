@@ -1,17 +1,12 @@
-﻿using System;
+﻿using BudgetManagerLibrary.Business_Objects;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BudgetManagerLibrary
 {
-    public class Income
+    public class Income : Entry
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double Amount { get; set; }
-        public DateTime? Date { get; set; }
-        public int BudgetID { get; set; }
-
         public Income(string name, double amount, DateTime? date, int budget)
         {
             Name = name;
@@ -22,6 +17,11 @@ namespace BudgetManagerLibrary
         public Income()
         {
 
+        }
+        public override string ToString()
+        {
+            string editedName = Name.TrimEnd();
+            return editedName;
         }
     }
 }

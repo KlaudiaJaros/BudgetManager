@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetManagerLibrary.Business_Objects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -28,13 +29,13 @@ namespace BudgetManagerLibrary
             
             if (File.Exists(path))
             {
-                string search = "BUDGET," + budgetId.ToString();
+                string targetLine = "BUDGET," + budgetId.ToString();
                 string[] lines = File.ReadAllLines(path);
                 List<string> newLines = new List<string>();
 
                 foreach (string line in lines)
                 {
-                    if (!line.Contains(search))
+                    if (!line.Contains(targetLine))
                     {
                         newLines.Add(line);
                     }
@@ -42,7 +43,6 @@ namespace BudgetManagerLibrary
                 File.Delete(path);
                 File.AppendAllLines(path, newLines);
             }
-
         }
 
         public void EditBudgetBalance(int budgetId, decimal budgetBalance)
@@ -78,7 +78,22 @@ namespace BudgetManagerLibrary
             throw new NotImplementedException();
         }
 
+        public List<Entry> GetEntries()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Entry> GetEntriesByDate(int budgetId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Expense> GetExpenses()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Income> GetIncomes()
         {
             throw new NotImplementedException();
         }
@@ -96,6 +111,23 @@ namespace BudgetManagerLibrary
             File.AppendAllLines(path, lines);
 
         return budget;
+        }
+
+        public Entry SaveEntry(Entry entry)
+        {
+            fileName = "Budget no " + entry.BudgetID + ".csv";
+
+            // save the csv file path:
+            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+
+            // convert expense into csv list :
+            List<string> lines = new List<string>();
+            lines.Add($"EXPENSE,{ entry.Id },{ entry.Name },{ entry.Amount},{ entry.Category},{ entry.Date},{ entry.BudgetID}");
+
+            // save to file:
+            File.AppendAllLines(path, lines);
+
+            return entry;
         }
 
         public Expense SaveExpense(Expense expense)

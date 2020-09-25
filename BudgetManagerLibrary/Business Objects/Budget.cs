@@ -29,7 +29,5 @@ namespace BudgetManagerLibrary
             string editedName = Name.TrimEnd();
             return editedName;
         }
-
-
     }
 }

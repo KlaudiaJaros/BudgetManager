@@ -1,4 +1,5 @@
 ﻿using BudgetManagerLibrary;
+using BudgetManagerLibrary.Business_Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace BudgetManager
     public partial class BudgetViewer : Window
     {
         private Budget Budget { get; set; } = new Budget(null, 0);
+        private List<Entry> Entries = new List<Entry>();
+        //private List<Expense> Expenses { get; set; } = new List<Expense>();
+        //private List<Income> Incomes { get; set; } = new List<Income>();
         public BudgetViewer(Budget passedBudget)
         {
             InitializeComponent();
@@ -29,6 +33,15 @@ namespace BudgetManager
             Budget = passedBudget;
             budgetNameBox.Text = Budget.Name;
             budgetBalanceBox.Text = Budget.Balance.ToString();
+
+            LoadData();
+            dataGrid.DataContext = Entries; 
+            // TODO: fix shit
+        } 
+
+        private void LoadData()
+        {
+            Entries = GlobalConfig.SQLConnection.GetEntriesByDate(Budget.Id);
         }
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)

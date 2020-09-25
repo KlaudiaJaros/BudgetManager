@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="BudgetViewer" Height="564.13" Width="860.87" FontSize="18" Icon="BM_icon.ico">
+        Title="Budget Manager - Budget Panel" Height="564.13" Width="860.87" FontSize="18" Icon="BM_icon_v2.ico">
 
     <Border Padding="15">
         <StackPanel>
@@ -31,20 +31,19 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Balance:" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Spent this month:" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="......" HorizontalAlignment="Center"/>
+                
                 
                 <!-- to fill with actual data : -->
                 <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Name="blank" Grid.Column="1" Grid.Row="4" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-           
+                           
                 <!-- for visual expense evaluation - pie chart maybe -->
                 <Canvas  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" 
                          Grid.RowSpan="5" VerticalAlignment="Top" />
             </Grid>
-
-            <!-- for history display -->
+            
+            <!-- history header: -->
             <Grid Margin="0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -54,18 +53,29 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <TextBlock  Text="History" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" 
+                            HorizontalAlignment="Center" FontWeight="SemiBold" Padding="8"/>
 
-                <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Text="History" 
-                           HorizontalAlignment="Center" FontWeight="SemiBold" Padding="8"/>
-                
-                
-            
+                <!--
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Date" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Name" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Amount" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="Category" HorizontalAlignment="Center"/>
+                -->
+            </Grid>
+
+            <!-- hisotry contents:  -->
+            <Grid>
+                <DataGrid Name="dataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
 
             <Grid Margin="0,15">
@@ -101,6 +111,7 @@
                 </Button>
 
             </Grid>
+            
 
         </StackPanel>
     </Border>
