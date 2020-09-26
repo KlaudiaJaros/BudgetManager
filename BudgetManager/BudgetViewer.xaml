@@ -20,24 +20,26 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Margin="25,10"  Grid.Column="0" Grid.Row="0" Text="Summary" 
                             FontWeight="SemiBold" FontSize="21"/>
-                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
-                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>
-                <TextBlock Margin="25,0,0,0" Grid.Column="0" Grid.Row="3" Text="Spent this month:" />
-
+                <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
+                <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>
+                <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="3" Text="Spent this month:" />
+                <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="4" Text="Average spent per day:" />
 
                 <!-- to fill with actual data : -->
                 <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="averageDay" Grid.Column="1" Grid.Row="4" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
 
                 <!-- for visual expense evaluation - pie chart maybe -->
                 <Canvas  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" 

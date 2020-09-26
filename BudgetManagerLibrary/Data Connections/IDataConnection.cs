@@ -19,5 +19,6 @@ namespace BudgetManagerLibrary
         Entry SaveEntry(Entry entry);
         void EditBudgetBalance(int budgetId, decimal budgetBalance);
         void DeleteBudget(int budgetId);
+        decimal GetExpensesByMonth(int month, int budgetId);
     }
 }

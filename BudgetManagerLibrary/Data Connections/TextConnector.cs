@@ -93,6 +93,11 @@ namespace BudgetManagerLibrary
             throw new NotImplementedException();
         }
 
+        public decimal GetExpensesByMonth(int month, int budgetId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Income> GetIncomes()
         {
             throw new NotImplementedException();

@@ -31,9 +31,15 @@ namespace BudgetManager
 
             Budget = passedBudget;
             budgetNameBox.Text = Budget.Name;
-            // TODO: budget balance display is incorrect
             budgetBalanceBox.Text = Budget.Balance.ToString("F");
-            // TODO: display 'spent this month'
+            // display 'spent this month' :
+            DateTime dateTime = DateTime.Now;
+            decimal spent= GlobalConfig.SQLConnection.GetExpensesByMonth(dateTime.Month, Budget.Id);
+            spent = 0 - spent;
+            monthlySpend.Text = spent.ToString("F");
+
+            decimal averageSpent = spent / dateTime.Day;
+            averageDay.Text = averageSpent.ToString("F");
 
             LoadData();
             dataGrid.DataContext = Entries; 

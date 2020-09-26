@@ -33,8 +33,9 @@
                 <TextBlock Text="Category:" Grid.Column="0" Grid.Row="2" FontSize="20"
                        HorizontalAlignment="Center"/>
                 <ComboBox Name="expenseCategory" Grid.Column="1" Grid.Row="2">
-                    <ComboBoxItem>Accommodation bills (Rent, Electricity)</ComboBoxItem>
-                    <ComboBoxItem>Media bills (Phone, Internet, TV)</ComboBoxItem>
+                    <ComboBoxItem>Accommodation </ComboBoxItem>
+                    <ComboBoxItem>Phone, Internet, TV</ComboBoxItem>
+                    <ComboBoxItem>Electricity and gas</ComboBoxItem>
                     <ComboBoxItem>Groceries</ComboBoxItem>
                     <ComboBoxItem>Shopping</ComboBoxItem>
                     <ComboBoxItem>Eating Out</ComboBoxItem>
@@ -43,6 +44,7 @@
                     <ComboBoxItem>Holiday</ComboBoxItem>
                     <ComboBoxItem>Entertainment</ComboBoxItem>
                     <ComboBoxItem>Sports and Wellbeing</ComboBoxItem>
+                    <ComboBoxItem>Other payments</ComboBoxItem>
                 </ComboBox>
                 <TextBlock Text="Date:" Grid.Column="0" Grid.Row="3" FontSize="20"
                        HorizontalAlignment="Center"/>

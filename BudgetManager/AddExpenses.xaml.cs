@@ -44,6 +44,7 @@ namespace BudgetManager
                 // edit budget:
                 decimal newBalance = Budget.Balance + Convert.ToDecimal(ExpenseEntry.Amount);
                 GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
+                Budget.Balance = newBalance;
 
                 // text file:
                 // pass the modified expense instance (sql added an unique ID to it) to the text file saver:

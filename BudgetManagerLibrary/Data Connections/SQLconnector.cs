@@ -121,5 +121,22 @@ namespace BudgetManagerLibrary
                 return entry;
             }
         }
+
+        public decimal GetExpensesByMonth(int month, int budgetId)
+        {
+            decimal monthlySpent = 0;
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@month", month);
+                p.Add("@budgetId", budgetId);
+                p.Add("@expenses", 0, dbType: DbType.Decimal, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spGetExpensesByMonth", p, commandType: CommandType.StoredProcedure);
+                monthlySpent = p.Get<decimal>("@expenses");
+
+                return monthlySpent;
+            }
+        }
     }
 }
