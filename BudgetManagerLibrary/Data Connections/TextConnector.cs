@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,11 @@ namespace BudgetManagerLibrary
                 File.Delete(path);
                 File.AppendAllLines(path, newLines);
             }
+        }
+
+        public void deleteEntry(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void EditBudgetBalance(int budgetId, decimal budgetBalance)
@@ -167,6 +173,11 @@ namespace BudgetManagerLibrary
             File.AppendAllLines(path, lines);
 
             return income;
+        }
+
+        DataTable IDataConnection.SpendByCategory(int budgetId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

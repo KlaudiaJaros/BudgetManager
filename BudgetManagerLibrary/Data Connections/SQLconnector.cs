@@ -138,5 +138,44 @@ namespace BudgetManagerLibrary
                 return monthlySpent;
             }
         }
+        public DataTable SpendByCategory (int budgetId)
+        {
+            DataTable dt = new DataTable();
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                //var p = new DynamicParameters();
+                //p.Add("@budgetId", budgetId);
+
+                //dt = (DataTable)connection.Query("dbo.spEntry_GetSpentByCategories", p, commandType: CommandType.StoredProcedure);
+
+                var p = new SqlParameter();
+                p.DbType = DbType.Int32;
+                p.ParameterName = "@budgetId";
+                p.Value = budgetId;
+
+                var com = new SqlCommand();
+                com.Connection = (SqlConnection)connection;
+                com.CommandType = CommandType.StoredProcedure;
+                com.CommandText = "dbo.spEntry_GetSpentByCategories";
+                com.Parameters.Add(p);
+
+                var adapt = new SqlDataAdapter();
+                adapt.SelectCommand = com;
+
+                adapt.Fill(dt);
+            }
+            return dt;
+        }
+
+        public void deleteEntry(int id)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@delEntryId", id);
+
+                connection.Execute("dbo.spDeleteEntry", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

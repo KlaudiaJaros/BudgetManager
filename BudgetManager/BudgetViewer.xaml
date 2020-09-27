@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BudgetManager"
+        xmlns:local="clr-namespace:BudgetManager" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Budget Manager - Budget Panel" Height="662.554" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico">
+        Title="Budget Manager - Budget Panel" Height="890.4" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico" d:DesignWidth="500" >
 
     <Border Padding="15">
         <StackPanel>
@@ -15,11 +15,16 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" MinWidth="200"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -29,21 +34,25 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Margin="25,10"  Grid.Column="0" Grid.Row="0" Text="Summary" 
-                            FontWeight="SemiBold" FontSize="21"/>
+                            FontWeight="SemiBold" FontSize="21" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="3" Text="Spent this month:" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="4" Text="Average spent per day:" />
-
+                <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="5" Text="Max spent by category:" />
+                
                 <!-- to fill with actual data : -->
-                <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
-                <TextBlock Name="averageDay" Grid.Column="1" Grid.Row="4" MaxWidth="300" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="budgetNameBox" Grid.Column="1" Grid.Row="1" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="budgetBalanceBox" Grid.Column="1" Grid.Row="2" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="monthlySpend" Grid.Column="1" Grid.Row="3" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="averageDay" Grid.Column="1" Grid.Row="4" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
+                <TextBlock Name="maxCategory" Grid.Column="1" Grid.Row="5" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
+                <!-- for visual expense evaluation - pie chart -->
 
-                <!-- for visual expense evaluation - pie chart maybe -->
-                <Canvas  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Left" 
-                         Grid.RowSpan="5" VerticalAlignment="Top" />
+                <lvc:PieChart Name="pieChart" Grid.Column="2" 
+                              Grid.RowSpan="12" MinHeight="350" MinWidth="500" LegendLocation="Left" 
+                              DataClick="Chart_OnDataClick" Hoverable="False" Margin="75,0,0,30">
+                </lvc:PieChart>
             </Grid>
 
             <!-- history header: -->
@@ -66,6 +75,7 @@
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
                         <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                        <DataGridTextColumn x:Name="idColumn" Header="ID" Binding="{Binding Id}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -73,6 +83,7 @@
             <!-- bottom menu: -->
             <Grid Margin="0,15">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -89,14 +100,19 @@
                         <SolidColorBrush Color="#FFF38E8E"/>
                     </Button.Background>
                 </Button>
-
-                <Button Name="AddIncomeButton" Grid.Column="2" Grid.Row="0" Margin="10" Content="Add income" Click="AddIncomeButton_Click">
+                <Button Name="DeleteEntry" Grid.Column="2" Grid.Row="0"   
+                        Margin="10"  Content="Delete Entry" Click="DeleteEntry_Click">
+                    <Button.Background>
+                        <SolidColorBrush Color="#FFF38E8E"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="AddIncomeButton" Grid.Column="3" Grid.Row="0" Margin="10" Content="Add income" Click="AddIncomeButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
                     </Button.Background>
                 </Button>
 
-                <Button Name="AddExpensesButton" Grid.Column="3" Grid.Row="0"   
+                <Button Name="AddExpensesButton" Grid.Column="4" Grid.Row="0"   
                         Margin="10"  Content="Add Expenses" Click="AddExpensesButton_Click">
                     <Button.Background>
                         <SolidColorBrush Color="#FFCAE2FB"/>
@@ -104,6 +120,9 @@
                 </Button>
 
             </Grid>
+
+
+
         </StackPanel>
     </Border>
 </Window>

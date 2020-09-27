@@ -1,6 +1,7 @@
 ﻿using BudgetManagerLibrary.Business_Objects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace BudgetManagerLibrary
@@ -20,5 +21,7 @@ namespace BudgetManagerLibrary
         void EditBudgetBalance(int budgetId, decimal budgetBalance);
         void DeleteBudget(int budgetId);
         decimal GetExpensesByMonth(int month, int budgetId);
+        DataTable SpendByCategory(int budgetId);
+        void deleteEntry(int id);
     }
 }
