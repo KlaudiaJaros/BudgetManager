@@ -26,13 +26,14 @@ namespace BudgetManager
         {
             InitializeComponent();
             Budget = newBudget;
+            incomeDate.Value = DateTime.Now;
         }
         private void AddNewIncomeButton_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateForm())
             {
                 double amount = double.Parse(incomeAmount.Text);
-                Entry newIncome = new Entry(incomeName.Text, amount, incomeCategory.Text, incomeDate.SelectedDate, Budget.Id);
+                Entry newIncome = new Entry(incomeName.Text, amount, incomeCategory.Text, incomeDate.Value, Budget.Id);
 
                 /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
@@ -57,7 +58,7 @@ namespace BudgetManager
                     // reset values:
                     incomeAmount.Text = "0";
                     incomeName.Text = "My Income";
-                    incomeDate.SelectedDate = null;
+                    incomeDate.Value = DateTime.Now;
                 }
                 else
                 {
@@ -97,7 +98,7 @@ namespace BudgetManager
                 output = false;
                 MessageBox.Show("Please select a category.");
             }
-            if (incomeDate.SelectedDate == null)
+            if (incomeDate.Value == null)
             {
                 output = false;
                 MessageBox.Show("Please select a date.");

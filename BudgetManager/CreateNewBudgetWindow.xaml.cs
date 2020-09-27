@@ -1,4 +1,5 @@
 ﻿using BudgetManagerLibrary;
+using BudgetManagerLibrary.Business_Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,14 @@ namespace BudgetManager
                     BudgetViewer view = new BudgetViewer(budgetEntry);
                     view.Show();
                     this.Close();
+                }
+
+                if (budgetEntry.Balance != 0)
+                {
+                    Entry startingBalance = new Entry("Starting Balance", (Double)budgetEntry.Balance, "UserInput", DateTime.Now, budgetEntry.Id);
+                    Entry Entry = new Entry();
+                    Entry = GlobalConfig.SQLConnection.SaveEntry(startingBalance);
+                    GlobalConfig.TextFileConnection.SaveEntry(startingBalance);
                 }
             }
         }

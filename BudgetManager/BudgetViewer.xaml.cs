@@ -20,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Schema;
 
 namespace BudgetManager
 {
@@ -35,77 +36,77 @@ namespace BudgetManager
         {
             InitializeComponent();
 
+            // summary display:
             Budget = passedBudget;
             budgetNameBox.Text = Budget.Name;
             budgetBalanceBox.Text = Budget.Balance.ToString("F");
-            // display 'spent this month' :
             DateTime dateTime = DateTime.Now;
             decimal spent= GlobalConfig.SQLConnection.GetExpensesByMonth(dateTime.Month, Budget.Id);
             spent = 0 - spent;
             monthlySpend.Text = spent.ToString("F");
-
             decimal averageSpent = spent / dateTime.Day;
             averageDay.Text = averageSpent.ToString("F");
-
+            
+            // for the DataGrid:
             LoadData();
             dataGrid.DataContext = Entries;
 
+            // for the PieChart:
             Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
             
-
-
             decimal[] spendByCategory = new decimal[12];
             double temp = 0;
             string maxSpentCategory = "";
 
             foreach (Entry e in Entries)
             {
-                string category = e.Category;
-                if (category != null)
-                    category = category.TrimEnd();
-                switch (category)
+                if (e.Amount <0 )
                 {
-                    case "Accommodation":
-                        spendByCategory[0] = spendByCategory[0] +  (Decimal)e.Amount;
-                        break;
-                    case "Phone, Internet, TV":
-                        spendByCategory[1] = spendByCategory[1] + (Decimal)e.Amount;
-                        break;
-                    case "Electricity and gas":
-                        spendByCategory[2] = spendByCategory[2] + (Decimal)e.Amount;
-                        break;
-                    case "Groceries":
-                        spendByCategory[3] = spendByCategory[3] + (Decimal)e.Amount;
-                        break;
-                    case "Shopping":
-                        spendByCategory[4] = spendByCategory[4] + (Decimal)e.Amount;
-                        break;
-                    case "Eating Out":
-                        spendByCategory[5] = spendByCategory[5] + (Decimal)e.Amount;
-                        break;
-                    case "Nights out":
-                        spendByCategory[6] = spendByCategory[6] + (Decimal)e.Amount;
-                        break;
-                    case "Transport":
-                        spendByCategory[7] = spendByCategory[7] + (Decimal)e.Amount;
-                        break;
-                    case "Holiday":
-                        spendByCategory[8] = spendByCategory[8] + (Decimal)e.Amount;
-                        break;
-                    case "Entertainment":
-                        spendByCategory[9] = spendByCategory[9] + (Decimal)e.Amount;
-                        break;
-                    case "Sports and Wellbeing":
-                        spendByCategory[10] = spendByCategory[10] + (Decimal)e.Amount;
-                        break;
-                    case "Other payments":
-                        spendByCategory[11] = spendByCategory[11] + (Decimal)e.Amount;
-                        break;
-                    default:
-                        spendByCategory[11] = spendByCategory[11] + (Decimal)e.Amount;
-                        break;
-
+                    string category = e.Category;
+                    if (category != null)
+                        category = category.TrimEnd();
+                    switch (category)
+                    {
+                        case "Accommodation":
+                            spendByCategory[0] = spendByCategory[0] + (Decimal)e.Amount;
+                            break;
+                        case "Phone-Internet-TV":
+                            spendByCategory[1] = spendByCategory[1] + (Decimal)e.Amount;
+                            break;
+                        case "Electricity and gas":
+                            spendByCategory[2] = spendByCategory[2] + (Decimal)e.Amount;
+                            break;
+                        case "Groceries":
+                            spendByCategory[3] = spendByCategory[3] + (Decimal)e.Amount;
+                            break;
+                        case "Shopping":
+                            spendByCategory[4] = spendByCategory[4] + (Decimal)e.Amount;
+                            break;
+                        case "Eating Out":
+                            spendByCategory[5] = spendByCategory[5] + (Decimal)e.Amount;
+                            break;
+                        case "Nights out":
+                            spendByCategory[6] = spendByCategory[6] + (Decimal)e.Amount;
+                            break;
+                        case "Transport":
+                            spendByCategory[7] = spendByCategory[7] + (Decimal)e.Amount;
+                            break;
+                        case "Holiday":
+                            spendByCategory[8] = spendByCategory[8] + (Decimal)e.Amount;
+                            break;
+                        case "Entertainment":
+                            spendByCategory[9] = spendByCategory[9] + (Decimal)e.Amount;
+                            break;
+                        case "Sports and Wellbeing":
+                            spendByCategory[10] = spendByCategory[10] + (Decimal)e.Amount;
+                            break;
+                        case "Other payments":
+                            spendByCategory[11] = spendByCategory[11] + (Decimal)e.Amount;
+                            break;
+                        default:
+                            spendByCategory[11] = spendByCategory[11] + (Decimal)e.Amount;
+                            break;
+                    }
                 }
 
                 if (e.Amount < temp)
@@ -116,7 +117,7 @@ namespace BudgetManager
             }
             
             maxCategory.Text = maxSpentCategory; // maybe add the value too? but must change the layout
-
+            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(57, 59, 58));
             SeriesCollection piechartData = new SeriesCollection
             {
                 new PieSeries
@@ -124,85 +125,108 @@ namespace BudgetManager
                     Title = "Accommodation",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(0)},
                     DataLabels = true,
-                    LabelPoint = labelPoint,                    
-
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Phone, Internet, TV",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(1)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Electricity and gas",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(2)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Groceries",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(3)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Shopping",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(4)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Eating Out",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(5)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Nights Out",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(6)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Transport",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(7)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Holiday",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(8)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Entertainment",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(9)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Sports and Wellbeing",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(10)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
                 new PieSeries
                 {
                     Title = "Other payments",
                     Values = new ChartValues<decimal> {spendByCategory.ElementAt(11)},
                     DataLabels = true,
-                    LabelPoint = labelPoint
+                    LabelPoint = labelPoint,
+                    FontSize=15,
+                    Foreground = brush
                 },
             };
             pieChart.Series = piechartData;
@@ -220,9 +244,8 @@ namespace BudgetManager
             pieChart.SeriesColors.Add(Color.FromRgb(255, 84, 101)); //enter
             pieChart.SeriesColors.Add(Color.FromRgb(212, 156, 255)); // sport
             pieChart.SeriesColors.Add(Color.FromRgb(154, 156, 161)); //other
-
+            
         }
-
         private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
             var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
@@ -327,10 +350,12 @@ namespace BudgetManager
                 var entry = (Entry)dataGrid.SelectedCells.ElementAt(4).Item;
                 entryId = entry.Id;
                 Console.WriteLine(entryId);
-                GlobalConfig.SQLConnection.deleteEntry(entryId);
+                GlobalConfig.SQLConnection.deleteEntry(entry);
+                GlobalConfig.TextFileConnection.deleteEntry(entry);
                 // edit budget balance:
                 decimal newBalance = Budget.Balance - (Decimal)entry.Amount;
                 GlobalConfig.SQLConnection.EditBudgetBalance(entry.BudgetID, newBalance);
+                GlobalConfig.TextFileConnection.EditBudgetBalance(entry.BudgetID, newBalance);
                 Budget.Balance = newBalance;
                 budgetBalanceBox.Text = Budget.Balance.ToString("F");
                 // edit datagrid display:

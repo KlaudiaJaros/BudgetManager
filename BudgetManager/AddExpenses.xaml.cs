@@ -26,6 +26,7 @@ namespace BudgetManager
         {
             InitializeComponent();
             Budget = newBudget;
+            expenseDate.Value = DateTime.Now;
         }
 
         private void AddNewExpenseButton_Click(object sender, RoutedEventArgs e)
@@ -34,7 +35,7 @@ namespace BudgetManager
             {
                 double amount = double.Parse(expenseAmount.Text);
                 amount -= amount * 2; // ?
-                Entry newExpense  = new Entry(expenseName.Text, amount, expenseCategory.Text, expenseDate.SelectedDate, Budget.Id );
+                Entry newExpense  = new Entry(expenseName.Text, amount, expenseCategory.Text, expenseDate.Value, Budget.Id );
 
                 /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
@@ -59,7 +60,8 @@ namespace BudgetManager
                     expenseAmount.Text = "0";
                     expenseName.Text = "My Expense";
                     expenseCategory.SelectedItem = null;
-                    expenseDate.SelectedDate = null;
+                    //expenseDate.SelectedDate = null;
+                    expenseDate.Value = DateTime.Now;
                 }
                 else
                 {
@@ -101,7 +103,7 @@ namespace BudgetManager
                 MessageBox.Show("Please select a category.");
             }
 
-            if (expenseDate.SelectedDate == null)
+            if (expenseDate.Value == null)
             {
                 output = false;
                 MessageBox.Show("Please select a date.");

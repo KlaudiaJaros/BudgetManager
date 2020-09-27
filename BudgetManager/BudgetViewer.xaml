@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Budget Manager - Budget Panel" Height="890.4" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico" d:DesignWidth="500" >
+        Title="Budget Manager - Budget Panel" Height="921.535" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico" d:DesignWidth="500" Left="100" Top="50" >
 
     <Border Padding="15">
         <StackPanel>
@@ -20,11 +20,11 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*" MaxHeight="40"/>
+                    <RowDefinition Height="*" MaxHeight="40"/>
+                    <RowDefinition Height="*" MaxHeight="40"/>
+                    <RowDefinition Height="*" MaxHeight="40"/>
+                    <RowDefinition Height="*" MaxHeight="40"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -34,6 +34,8 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Margin="25,10"  Grid.Column="0" Grid.Row="0" Text="Summary" 
+                            FontWeight="SemiBold" FontSize="21" />
+                <TextBlock Margin="225,10"  Grid.Column="2" Grid.Row="0" Text="Spendings review" 
                             FontWeight="SemiBold" FontSize="21" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>
@@ -49,7 +51,7 @@
                 <TextBlock Name="maxCategory" Grid.Column="1" Grid.Row="5" MaxWidth="150" FontFamily="Segoe UI Semilight"/>
                 <!-- for visual expense evaluation - pie chart -->
 
-                <lvc:PieChart Name="pieChart" Grid.Column="2" 
+                <lvc:PieChart Name="pieChart" Grid.Column="2" Grid.Row="1"
                               Grid.RowSpan="12" MinHeight="350" MinWidth="500" LegendLocation="Left" 
                               DataClick="Chart_OnDataClick" Hoverable="False" Margin="75,0,0,30">
                 </lvc:PieChart>
@@ -63,10 +65,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock  Text="History" FontSize="21" Margin="25,10"  Grid.Column="0" Grid.Row="0" FontWeight="SemiBold"/>
+                <TextBlock  Text="History" FontSize="21" Margin="25,0"  Grid.Column="0" Grid.Row="0" FontWeight="SemiBold"/>
             </Grid>
 
-            <!-- hisotry contents:  -->
+            <!-- history contents:  -->
             <Grid>
                 <DataGrid Name="dataGrid" IsReadOnly="True" CanUserReorderColumns="False" CanUserAddRows="False" 
                           MaxHeight="200" HorizontalScrollBarVisibility="Auto" SelectionMode="Single" ItemsSource="{Binding}" AutoGenerateColumns="False">

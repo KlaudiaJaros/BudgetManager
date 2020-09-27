@@ -22,6 +22,6 @@ namespace BudgetManagerLibrary
         void DeleteBudget(int budgetId);
         decimal GetExpensesByMonth(int month, int budgetId);
         DataTable SpendByCategory(int budgetId);
-        void deleteEntry(int id);
+        void deleteEntry(Entry entry);
     }
 }

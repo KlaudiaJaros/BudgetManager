@@ -46,11 +46,6 @@ namespace BudgetManagerLibrary
             }
         }
 
-        public void deleteEntry(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void EditBudgetBalance(int budgetId, decimal budgetBalance)
         {
             fileName = "List of all budgets.csv";
@@ -79,36 +74,6 @@ namespace BudgetManagerLibrary
             }
         }
 
-        public List<Budget> GetBudgets()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Entry> GetEntries()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Entry> GetEntriesByDate(int budgetId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Expense> GetExpenses()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetExpensesByMonth(int month, int budgetId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Income> GetIncomes()
-        {
-            throw new NotImplementedException();
-        }
-
         public Budget SaveBudget(Budget budget)
         {
             fileName = "List of all budgets.csv";
@@ -133,48 +98,62 @@ namespace BudgetManagerLibrary
 
             // convert expense into csv list :
             List<string> lines = new List<string>();
-            lines.Add($"EXPENSE,{ entry.Id },{ entry.Name },{ entry.Amount},{ entry.Category},{ entry.Date},{ entry.BudgetID}");
-
+            if (entry.Amount>0)
+            {
+                lines.Add($"INCOME,{ entry.Id },{ entry.Name },{ entry.Amount},{ entry.Category},{ entry.Date},{ entry.BudgetID}");
+            }
+            else
+            {
+                lines.Add($"EXPENSE,{ entry.Id },{ entry.Name },{ entry.Amount},{ entry.Category},{ entry.Date},{ entry.BudgetID}");
+            }
+            
             // save to file:
             File.AppendAllLines(path, lines);
 
             return entry;
         }
-
-        public Expense SaveExpense(Expense expense)
+        public void deleteEntry(Entry entry)
         {
-            fileName = "Budget no " + expense.BudgetID + ".csv";
-            
-            // save the csv file path:
+            fileName = "Budget no " + entry.BudgetID + ".csv";
             string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
 
-            // convert expense into csv list :
-            List<string> lines = new List<string>();
-            lines.Add($"EXPENSE,{ expense.Id },{ expense.Name },{ expense.Amount},{ expense.Category},{ expense.Date},{ expense.BudgetID}");
+            if (File.Exists(path))
+            {
+                string targetLineExpense = "EXPENSE," + entry.Id.ToString();
+                string targetLineIncome = "INCOME," + entry.Id.ToString();
+                string[] lines = File.ReadAllLines(path);
+                List<string> newLines = new List<string>();
 
-            // save to file:
-            File.AppendAllLines(path, lines);
-           
-            return expense;
+                foreach (string line in lines)
+                {
+                    if (!line.Contains(targetLineExpense) & !line.Contains(targetLineIncome))
+                    {
+                        newLines.Add(line);
+                    }
+                }
+                File.Delete(path);
+                File.AppendAllLines(path, newLines);
+            }
         }
-
-        public Income SaveIncome(Income income)
+        public List<Budget> GetBudgets()
         {
-            // TODO: implement SaveIncome in TextConnector
-            fileName = "Budget no " + income.BudgetID + ".csv";
-            // save the csv file path:
-            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
-
-            // convert income into csv list :
-            List<string> lines = new List<string>();
-            lines.Add($"INCOME,{ income.Id },{ income.Name },{ income.Amount},{ income.Date},{ income.BudgetID}");
-
-            // save to file:
-            File.AppendAllLines(path, lines);
-
-            return income;
+            throw new NotImplementedException();
         }
 
+        public List<Entry> GetEntries()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Entry> GetEntriesByDate(int budgetId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetExpensesByMonth(int month, int budgetId)
+        {
+            throw new NotImplementedException();
+        }
         DataTable IDataConnection.SpendByCategory(int budgetId)
         {
             throw new NotImplementedException();

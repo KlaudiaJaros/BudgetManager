@@ -133,9 +133,15 @@ namespace BudgetManagerLibrary
                 p.Add("@expenses", 0, dbType: DbType.Decimal, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spGetExpensesByMonth", p, commandType: CommandType.StoredProcedure);
-                monthlySpent = p.Get<decimal>("@expenses");
-
-                return monthlySpent;
+                try
+                {
+                    monthlySpent = p.Get<decimal>("@expenses");
+                    return monthlySpent;
+                }
+                catch
+                {
+                    return 0;
+                }                
             }
         }
         public DataTable SpendByCategory (int budgetId)
@@ -167,12 +173,12 @@ namespace BudgetManagerLibrary
             return dt;
         }
 
-        public void deleteEntry(int id)
+        public void deleteEntry(Entry entry )
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
             {
                 var p = new DynamicParameters();
-                p.Add("@delEntryId", id);
+                p.Add("@delEntryId", entry.Id);
 
                 connection.Execute("dbo.spDeleteEntry", p, commandType: CommandType.StoredProcedure);
             }

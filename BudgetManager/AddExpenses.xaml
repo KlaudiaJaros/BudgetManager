@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BudgetManager"
+        xmlns:local="clr-namespace:BudgetManager" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Budget Manager - Add Expenses" Height="401.086" Width="582.608" FontSize="18" Icon="BM_icon_v2.ico">
+        Title="Budget Manager - Add Expenses" Height="407.144" Width="582.608" FontSize="18" Icon="BM_icon_v2.ico" Left="200" Top="200" >
 
     <Border Padding="15">
         <StackPanel>
             <TextBlock Text="Add an expense" FontSize="30" FontWeight="DemiBold" Padding="15"/>
-            <Grid Margin="0,15">
+            <Grid Margin="15,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" MinWidth="150"/>
+                    <ColumnDefinition Width="*" MinWidth="270"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -25,16 +25,16 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Name:" Grid.Column="0" Grid.Row="0" FontSize="20"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Left"/>
                 <TextBox Name="expenseName" Grid.Column="1" Grid.Row="0" MaxWidth="300" Text="My Expense" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Text="Amount (£):" Grid.Column="0" Grid.Row="1" FontSize="20"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Left"/>
                 <TextBox Name="expenseAmount" Grid.Column="1" Grid.Row="1" MaxWidth="300" Text="350" FontFamily="Segoe UI Semilight"/>
                 <TextBlock Text="Category:" Grid.Column="0" Grid.Row="2" FontSize="20"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Left"/>
                 <ComboBox Name="expenseCategory" Grid.Column="1" Grid.Row="2">
                     <ComboBoxItem>Accommodation</ComboBoxItem>
-                    <ComboBoxItem>Phone, Internet, TV</ComboBoxItem>
+                    <ComboBoxItem>Phone-Internet-TV</ComboBoxItem>
                     <ComboBoxItem>Electricity and gas</ComboBoxItem>
                     <ComboBoxItem>Groceries</ComboBoxItem>
                     <ComboBoxItem>Shopping</ComboBoxItem>
@@ -47,8 +47,8 @@
                     <ComboBoxItem>Other payments</ComboBoxItem>
                 </ComboBox>
                 <TextBlock Text="Date:" Grid.Column="0" Grid.Row="3" FontSize="20"
-                       HorizontalAlignment="Center"/>
-                <DatePicker Name="expenseDate"  Grid.Column="1" Grid.Row="3"/>
+                       HorizontalAlignment="Left"/>
+                <xctk:DateTimePicker Name="expenseDate"  Grid.Column="1" Grid.Row="3" FontFamily="Segoe UI Semilight"/>
 
                 <!--  TODO: in the future: add frequency and reoccuring entries:
                 <TextBlock Text="Is it reoccuring?" Grid.Row="4" Grid.Column="0" FontSize="20" HorizontalAlignment="Center"/>

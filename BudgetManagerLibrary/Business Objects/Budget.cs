@@ -8,9 +8,7 @@ namespace BudgetManagerLibrary
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Balance { get; set; }
-        
-        private List<Expense> Expenses = new List<Expense>();
+        public decimal Balance { get; set; }      
 
         public Budget(System.Int32 budgetId, System.String name, System.Decimal balance)
         {
