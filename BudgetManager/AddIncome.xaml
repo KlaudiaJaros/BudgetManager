@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Budget Manager - Add Income" Height="407.144" Width="582.608"  FontSize="18" Left="200" Top="200" Icon="BM_icon_v2.ico">
+        Title="Budget Manager - Add Income"  Height="407.144" Width="582.608"  FontSize="18" Left="200" Top="200" Icon="BM_icon_v2.ico">
 
     <Border Padding="15">
         <StackPanel>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="Budget Manager - Create New Budget" Height="407.144" Width="582.608" Left="200" Top="200" Icon="BM_icon_v2.ico" FontSize="18">
+        Title="Budget Manager - Create New Budget"  Height="407.144" Width="582.608" Left="200" Top="200" Icon="BM_icon_v2.ico" FontSize="18">
 
     <Border Padding="15">
         <StackPanel>

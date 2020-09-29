@@ -135,6 +135,9 @@ namespace BudgetManagerLibrary
                 File.AppendAllLines(path, newLines);
             }
         }
+
+        // TODO: implement interface methods below
+
         public List<Budget> GetBudgets()
         {
             throw new NotImplementedException();
@@ -151,10 +154,6 @@ namespace BudgetManagerLibrary
         }
 
         public decimal GetExpensesByMonth(int month, int budgetId)
-        {
-            throw new NotImplementedException();
-        }
-        DataTable IDataConnection.SpendByCategory(int budgetId)
         {
             throw new NotImplementedException();
         }

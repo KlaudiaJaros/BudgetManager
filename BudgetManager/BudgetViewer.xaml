@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Budget Manager - Budget Panel" Height="921.535" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico" d:DesignWidth="500" Left="100" Top="50" >
+        Title="Budget Manager - Budget Panel" Height="921.535" Width="1151.986" FontSize="18" Icon="BM_icon_v2.ico" d:DesignWidth="500" Left="100" Top="50" Background="#FFE3FAFF" >
 
     <Border Padding="15">
         <StackPanel>
