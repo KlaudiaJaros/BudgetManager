@@ -22,6 +22,8 @@ namespace BudgetManager
     public partial class CreateNewBudgetWindow : Window
     {
         private bool addExpense;
+        private static int id = 0;
+        private static int entry = 0;
 
         public CreateNewBudgetWindow()
         {
@@ -37,15 +39,43 @@ namespace BudgetManager
             {
                 decimal balance = decimal.Parse(startingBalance.Text);
                 Budget newBudget = new Budget(budgetName.Text, balance);
+                Entry startingBalanceEntry = new Entry();
 
                 /* Create a budget entry for all existing connections: */
-                // temporary budget instance:
-                Budget budgetEntry = new Budget(null, 0);
-                // sql:
-                budgetEntry = GlobalConfig.SQLConnection.SaveBudget(newBudget);
-                // text file:
-                // pass the modified budget instance (sql added an unique ID to it) to the text file saver:
-                GlobalConfig.TextFileConnection.SaveBudget(budgetEntry);
+
+                if (GlobalConfig.sqlConnection && GlobalConfig.textConnection)
+                {
+                    newBudget = GlobalConfig.SQLConnection.SaveBudget(newBudget);
+                    // pass the modified budget instance (sql added an unique ID to it) to the text file saver:
+                    GlobalConfig.TextFileConnection.SaveBudget(newBudget);
+                    if (newBudget.Balance != 0)
+                    {
+                        startingBalanceEntry = new Entry("Starting Balance", (Double)newBudget.Balance, "UserInput", DateTime.Now, newBudget.Id);
+                        startingBalanceEntry = GlobalConfig.SQLConnection.SaveEntry(startingBalanceEntry);
+                        GlobalConfig.TextFileConnection.SaveEntry(startingBalanceEntry);
+                    }
+                }
+                else if(GlobalConfig.sqlConnection)
+                {
+                    newBudget = GlobalConfig.SQLConnection.SaveBudget(newBudget);
+                    if (newBudget.Balance != 0)
+                    {
+                        startingBalanceEntry = new Entry("Starting Balance", (Double)newBudget.Balance, "UserInput", DateTime.Now, newBudget.Id);
+                        startingBalanceEntry = GlobalConfig.SQLConnection.SaveEntry(startingBalanceEntry);
+                    }
+                }
+                else if (GlobalConfig.textConnection)
+                {
+                    newBudget.Id = id;
+                    id++;
+                    GlobalConfig.TextFileConnection.SaveBudget(newBudget);
+                    if (newBudget.Balance != 0)
+                    {
+                        startingBalanceEntry = new Entry("Starting Balance", (Double)newBudget.Balance, "UserInput", DateTime.Now, newBudget.Id);
+                        startingBalanceEntry.Id = entry;
+                        GlobalConfig.TextFileConnection.SaveEntry(startingBalanceEntry);
+                    }
+                }
 
                 // reset values:
                 startingBalance.Text = "0";
@@ -53,24 +83,17 @@ namespace BudgetManager
 
                 if (addExpense)
                 {
-                    AddExpenses window = new AddExpenses(budgetEntry);
+                    AddExpenses window = new AddExpenses(newBudget);
                     window.Show();
                     this.Close();
                 }
                 else
                 {
-                    BudgetViewer view = new BudgetViewer(budgetEntry);
+                    BudgetViewer view = new BudgetViewer(newBudget);
                     view.Show();
                     this.Close();
                 }
 
-                if (budgetEntry.Balance != 0)
-                {
-                    Entry startingBalance = new Entry("Starting Balance", (Double)budgetEntry.Balance, "UserInput", DateTime.Now, budgetEntry.Id);
-                    Entry Entry = new Entry();
-                    Entry = GlobalConfig.SQLConnection.SaveEntry(startingBalance);
-                    GlobalConfig.TextFileConnection.SaveEntry(startingBalance);
-                }
             }
         }
 

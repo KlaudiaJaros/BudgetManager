@@ -35,7 +35,7 @@
 
                 <TextBlock Margin="25,10"  Grid.Column="0" Grid.Row="0" Text="Summary" 
                             FontWeight="SemiBold" FontSize="21" />
-                <TextBlock Margin="225,10"  Grid.Column="2" Grid.Row="0" Text="Spendings review" 
+                <TextBlock Margin="225,10"  Grid.Column="2" Grid.Row="0" Text="Spending review" 
                             FontWeight="SemiBold" FontSize="21" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="1" Text="Name:" />
                 <TextBlock Margin="25,0,10,0" Grid.Column="0" Grid.Row="2" Text="Balance:"/>

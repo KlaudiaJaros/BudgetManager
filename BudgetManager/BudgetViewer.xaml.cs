@@ -29,7 +29,7 @@ namespace BudgetManager
     /// </summary>
     public partial class BudgetViewer : Window 
     {
-        private Budget Budget { get; set; } = new Budget(null, 0);
+        private Budget Budget = new Budget(null, 0);
         private List<Entry> Entries = new List<Entry>();
 
         public BudgetViewer(Budget passedBudget)
@@ -41,7 +41,15 @@ namespace BudgetManager
             budgetNameBox.Text = Budget.Name;
             budgetBalanceBox.Text = Budget.Balance.ToString("F");
             DateTime dateTime = DateTime.Now;
-            decimal spent= GlobalConfig.SQLConnection.GetExpensesByMonth(dateTime.Month, Budget.Id);
+            decimal spent = 0;
+
+            if (GlobalConfig.sqlConnection && GlobalConfig.textConnection)
+                spent = GlobalConfig.SQLConnection.GetSpendByMonth(dateTime.Month, Budget.Id);
+            else if (GlobalConfig.sqlConnection)
+                spent = GlobalConfig.SQLConnection.GetSpendByMonth(dateTime.Month, Budget.Id);
+            else if (GlobalConfig.textConnection)
+                spent = GlobalConfig.TextFileConnection.GetSpendByMonth(dateTime.Month, Budget.Id);
+
             spent = 0 - spent;
             monthlySpend.Text = spent.ToString("F");
             decimal averageSpent = spent / dateTime.Day;
@@ -259,7 +267,19 @@ namespace BudgetManager
         }
         private void LoadData()
         {
-            Entries = GlobalConfig.SQLConnection.GetEntriesByDate(Budget.Id);
+            if (GlobalConfig.textConnection && GlobalConfig.sqlConnection)
+            {
+                Entries = GlobalConfig.SQLConnection.GetEntriesByDate(Budget.Id);
+            }
+            else if (GlobalConfig.sqlConnection)
+            {
+                Entries = GlobalConfig.SQLConnection.GetEntriesByDate(Budget.Id);
+            }              
+            else if (GlobalConfig.textConnection)
+            {
+                Entries = GlobalConfig.TextFileConnection.GetEntriesByDate(Budget.Id);
+            }
+
         }
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
@@ -298,8 +318,16 @@ namespace BudgetManager
             {
                 case MessageBoxResult.Yes:
                     // User pressed Yes button, call deletion methods:
-                    GlobalConfig.SQLConnection.DeleteBudget(Budget.Id);
-                    GlobalConfig.TextFileConnection.DeleteBudget(Budget.Id);
+                    if (GlobalConfig.textConnection && GlobalConfig.sqlConnection)
+                    {
+                        GlobalConfig.SQLConnection.DeleteBudget(Budget.Id);
+                        GlobalConfig.TextFileConnection.DeleteBudget(Budget.Id);
+                    }
+                    else if (GlobalConfig.sqlConnection)
+                        GlobalConfig.SQLConnection.DeleteBudget(Budget.Id);
+                    else if (GlobalConfig.textConnection)
+                        GlobalConfig.TextFileConnection.DeleteBudget(Budget.Id);
+
                     System.Windows.MessageBox.Show("Budget deleted successfully.");
                                     
                     MainWindow window = new MainWindow();
@@ -349,15 +377,30 @@ namespace BudgetManager
                 int entryId = 0;
                 var entry = (Entry)dataGrid.SelectedCells.ElementAt(4).Item;
                 entryId = entry.Id;
-                Console.WriteLine(entryId);
-                GlobalConfig.SQLConnection.deleteEntry(entry);
-                GlobalConfig.TextFileConnection.deleteEntry(entry);
+                
                 // edit budget balance:
                 decimal newBalance = Budget.Balance - (Decimal)entry.Amount;
-                GlobalConfig.SQLConnection.EditBudgetBalance(entry.BudgetID, newBalance);
-                GlobalConfig.TextFileConnection.EditBudgetBalance(entry.BudgetID, newBalance);
                 Budget.Balance = newBalance;
                 budgetBalanceBox.Text = Budget.Balance.ToString("F");
+
+                if (GlobalConfig.textConnection && GlobalConfig.sqlConnection)
+                {
+                    GlobalConfig.SQLConnection.DeleteEntry(entry);
+                    GlobalConfig.TextFileConnection.DeleteEntry(entry);
+                    GlobalConfig.SQLConnection.EditBudgetBalance(entry.BudgetID, newBalance);
+                    GlobalConfig.TextFileConnection.EditBudgetBalance(entry.BudgetID, newBalance);
+                }
+                else if (GlobalConfig.sqlConnection)
+                {
+                    GlobalConfig.SQLConnection.DeleteEntry(entry);
+                    GlobalConfig.SQLConnection.EditBudgetBalance(entry.BudgetID, newBalance);
+                }
+                else if (GlobalConfig.textConnection)
+                {
+                    GlobalConfig.TextFileConnection.DeleteEntry(entry);
+                    GlobalConfig.TextFileConnection.EditBudgetBalance(entry.BudgetID, newBalance);
+                }
+
                 // edit datagrid display:
                 Entries.RemoveAt(index);
                 dataGrid.ItemsSource = null;

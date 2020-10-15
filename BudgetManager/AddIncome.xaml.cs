@@ -21,7 +21,8 @@ namespace BudgetManager
     /// </summary>
     public partial class AddIncome : Window
     {
-        private Budget Budget { get; set; } = new Budget(null, 0);
+        private Budget Budget = new Budget(null, 0);
+        public static int id=1;
         public AddIncome(Budget newBudget)
         {
             InitializeComponent();
@@ -38,19 +39,38 @@ namespace BudgetManager
                 /* Create a expense entry for all existing connections: */
                 // temporary expense instance:
                 Entry incomeEntry = new Entry();
-                // sql:
-                incomeEntry = GlobalConfig.SQLConnection.SaveEntry(newIncome);
                 // edit budget balance (add Income to it) :
-                decimal newBalance = Budget.Balance + Convert.ToDecimal(incomeEntry.Amount);
-                GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
+                decimal newBalance = Budget.Balance + Convert.ToDecimal(newIncome.Amount);
                 Budget.Balance = newBalance;
 
+
+                // sql and text:
+                if (GlobalConfig.sqlConnection && GlobalConfig.textConnection)
+                {
+                    // sql:
+                    incomeEntry = GlobalConfig.SQLConnection.SaveEntry(newIncome);
+                    GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
+                    // text: pass the modified expense instance (sql added an unique ID to it) to the text file saver:
+                    GlobalConfig.TextFileConnection.SaveEntry(incomeEntry);
+                    // edit budget balance in the text file:
+                    GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
+                }
+                // sql:
+                else if (GlobalConfig.sqlConnection)
+                {
+                    incomeEntry = GlobalConfig.SQLConnection.SaveEntry(newIncome);
+                    GlobalConfig.SQLConnection.EditBudgetBalance(Budget.Id, newBalance);
+
+                }
                 // text file:
-                // pass the modified expense instance (sql added an unique ID to it) to the text file saver:
-                // TODO: fix text connection
-                GlobalConfig.TextFileConnection.SaveEntry(incomeEntry);
-                // edit budget balance in text file:
-                GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
+                else if (GlobalConfig.textConnection)
+                {
+                    newIncome.Id = id;
+                    id++;
+                    GlobalConfig.TextFileConnection.SaveEntry(newIncome);
+                    // edit budget balance in the text file:
+                    GlobalConfig.TextFileConnection.EditBudgetBalance(Budget.Id, newBalance);
+                }
 
                 Button income = (Button)sender;
                 if (income.Name == "NewIncomeButton")

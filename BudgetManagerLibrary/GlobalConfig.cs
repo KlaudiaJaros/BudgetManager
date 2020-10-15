@@ -16,6 +16,8 @@ namespace BudgetManagerLibrary
         /// </summary>
         public static IDataConnection SQLConnection { get; private set; }
         public static IDataConnection TextFileConnection { get; private set; }
+        public static bool sqlConnection;
+        public static bool textConnection;
 
         /// <summary>
         /// Based on which parameter is true, this method establishes either a database connection or a text file connection.
@@ -28,11 +30,13 @@ namespace BudgetManagerLibrary
             {
                 SQLconnector sql = new SQLconnector();
                 SQLConnection = sql;
+                sqlConnection = true;
             }
             if (textFileBool)
             {
                 TextConnector text = new TextConnector();
                 TextFileConnection= text;
+                textConnection = true;
             }
         }
 

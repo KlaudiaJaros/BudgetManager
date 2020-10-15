@@ -122,7 +122,7 @@ namespace BudgetManagerLibrary
             }
         }
 
-        public decimal GetExpensesByMonth(int month, int budgetId)
+        public decimal GetSpendByMonth(int month, int budgetId)
         {
             decimal monthlySpent = 0;
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
@@ -145,7 +145,7 @@ namespace BudgetManagerLibrary
             }
         }
 
-        public void deleteEntry(Entry entry )
+        public void DeleteEntry(Entry entry )
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(DatabaseName)))
             {

@@ -21,7 +21,7 @@ namespace BudgetManager
     public partial class ManageBudgetsWindow : Window
     {
         // To display budgets from SQL db in the Combobox:
-        public List<Budget> budgets = new List<Budget>();
+        private List<Budget> budgets = new List<Budget>();
 
         public ManageBudgetsWindow()
         {
@@ -34,9 +34,14 @@ namespace BudgetManager
         /// <summary>
         /// A method that saves a list of all budgets that are stored in the SQL database in the budgets property of this class.
         /// </summary>
-        public void LoadBudgets()
+        private void LoadBudgets()
         {
-            budgets = GlobalConfig.SQLConnection.GetBudgets();
+            if (GlobalConfig.sqlConnection && GlobalConfig.textConnection)
+                budgets = GlobalConfig.SQLConnection.GetBudgets();
+            else if (GlobalConfig.textConnection)
+                budgets = GlobalConfig.TextFileConnection.GetBudgets();
+            else if (GlobalConfig.sqlConnection)
+                budgets = GlobalConfig.SQLConnection.GetBudgets();
         }
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)

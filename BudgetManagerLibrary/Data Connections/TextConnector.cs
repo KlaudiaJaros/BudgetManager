@@ -83,10 +83,16 @@ namespace BudgetManagerLibrary
             // convert budget into csv list :
             List<string> lines = new List<string>();
             lines.Add($"BUDGET,{ budget.Id },{ budget.Name },{budget.Balance}");
+            if (!File.Exists(path))
+            {
+                File.AppendAllLines(path, lines);
+            }
+            else
+            {
+                File.AppendAllLines(path, lines);
+            }
 
-            File.AppendAllLines(path, lines);
-
-        return budget;
+             return budget;
         }
 
         public Entry SaveEntry(Entry entry)
@@ -112,7 +118,7 @@ namespace BudgetManagerLibrary
 
             return entry;
         }
-        public void deleteEntry(Entry entry)
+        public void DeleteEntry(Entry entry)
         {
             fileName = "Budget no " + entry.BudgetID + ".csv";
             string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
@@ -140,7 +146,25 @@ namespace BudgetManagerLibrary
 
         public List<Budget> GetBudgets()
         {
-            throw new NotImplementedException();
+            List<Budget> budgets = new List<Budget>();
+
+            fileName = "List of all budgets.csv";
+            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+            if (File.Exists(path))
+            {
+                string[] lines = File.ReadAllLines(path);
+                foreach (string line in lines)
+                {
+                    string[] separated = line.Split(',');
+                    Budget b = new Budget(Int32.Parse(separated[1]), separated[2], decimal.Parse(separated[3]));
+                    budgets.Add(b);
+                }
+                return budgets;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<Entry> GetEntries()
@@ -150,12 +174,55 @@ namespace BudgetManagerLibrary
 
         public List<Entry> GetEntriesByDate(int budgetId)
         {
-            throw new NotImplementedException();
-        }
+            List<Entry> entries = new List<Entry>();
 
-        public decimal GetExpensesByMonth(int month, int budgetId)
+            fileName = "Budget no " + budgetId.ToString() + ".csv";
+            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+
+            if (File.Exists(path))
+            {
+                string[] lines = File.ReadAllLines(path);
+                foreach (string line in lines)
+                {
+                    string[] separated = line.Split(',');
+                    Entry e = new Entry(Int32.Parse(separated[1]), separated[2], double.Parse(separated[3]), separated[4], DateTime.Parse(separated[5]), Int32.Parse(separated[6]));
+                    // TODO: sort by date
+                    entries.Add(e);
+                }
+                return entries;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    
+
+        public decimal GetSpendByMonth(int month, int budgetId)
         {
-            throw new NotImplementedException();
+            fileName = "Budget no " + budgetId.ToString() + ".csv";
+            string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
+            decimal total = 0;
+
+            if (File.Exists(path))
+            {
+                string[] lines = File.ReadAllLines(path);
+
+                foreach (string line in lines)
+                {
+                    string[] separated = line.Split(',');
+                    string[] date = separated[5].Split('/');
+                    if (date[1].Equals(month.ToString()) || date[1].Equals("0" + month.ToString()))
+                    {
+                        decimal amount = decimal.Parse(separated[3]);
+                        if (amount<0)
+                            total += amount;
+                    }
+                }
+                return total;
+            }
+            else
+                return 0;
         }
     }
 }
