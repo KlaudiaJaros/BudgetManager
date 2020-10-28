@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Schema;
 
 namespace BudgetManager
 {
@@ -27,12 +28,26 @@ namespace BudgetManager
         {
             InitializeComponent();
 
+            if (MainWindow.sql && MainWindow.txt)
+                connectionInfo.Text = "Database and TextFile Connection";
+            else if (MainWindow.txt)
+                connectionInfo.Text = "TextFile Connection";
+            else if (MainWindow.sql)
+                connectionInfo.Text = "Database Connection";
+            else
+            {
+                connectionInfo.Text = "No connection!";
+                connectionInfo.Foreground = Brushes.Red;
+            }
+                
+
             LoadBudgets();
             existingBudgets.ItemsSource = budgets;
         }
 
         /// <summary>
-        /// A method that saves a list of all budgets that are stored in the SQL database in the budgets property of this class.
+        /// A method that gets a list of all budgets that are stored in the SQL database or txt file and saves it in the budgets list property of this class.
+        /// Note: if a budget was saved in txt mode only, it won't be visible in txt and db mode!
         /// </summary>
         private void LoadBudgets()
         {

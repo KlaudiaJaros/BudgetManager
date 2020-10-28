@@ -23,8 +23,7 @@ namespace BudgetManager
         [STAThread]
         public static void Main()
         {
-            /* Initialise the database connections (sql database, text file): */
-            GlobalConfig.InitialiseConnections(true, true);
+
 
             var application = new App();
             /* To run from the Main Window: */
