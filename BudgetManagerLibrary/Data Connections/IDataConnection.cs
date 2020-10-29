@@ -6,11 +6,13 @@ using System.Text;
 
 namespace BudgetManagerLibrary
 {
+    /// <summary>
+    /// An interface for data connections. It provides methods to write and read to and from a data connection for the purpose of this application.
+    /// </summary>
     public interface IDataConnection
     {
         Budget SaveBudget(Budget budget);
         List<Budget> GetBudgets();
-        List<Entry> GetEntries();
         List<Entry> GetEntriesByDate(int budgetId);
         Entry SaveEntry(Entry entry);
         void EditBudgetBalance(int budgetId, decimal budgetBalance);

@@ -19,11 +19,11 @@ using System.Windows.Shapes;
 namespace BudgetManager
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for the Main Window of the Budget Manager.
     /// </summary>
     public partial class MainWindow 
     {
-        // txt and sql connectors booleans, by default both are true:
+        /* txt and sql connection booleans, by default both are true: */
         public static bool txt = true;
         public static bool sql = true;
 
@@ -37,7 +37,7 @@ namespace BudgetManager
 
         private void ManageBudgets_Click(object sender, RoutedEventArgs e)
         {
-            /* Initialise the database connections (sql database, text file): */
+            /* Initialise the data connections (sql database, text file) using the default values or values modifeid by the user: */
             GlobalConfig.InitialiseConnections(sql, txt);
             ManageBudgetsWindow window = new ManageBudgetsWindow();            
             window.Show();
@@ -46,14 +46,14 @@ namespace BudgetManager
 
         private void CreateNewBudget_Click(object sender, RoutedEventArgs e)
         {
-            /* Initialise the database connections (sql database, text file): */
+            /* Initialise the data connections (sql database, text file) using the default values or values modifeid by the user: */
             GlobalConfig.InitialiseConnections(sql, txt);
             CreateNewBudgetWindow window = new CreateNewBudgetWindow();
             window.Show();
             this.Close();
         }
 
-        /* Show/Hide text and database connections options. */
+        /* Show/Hide the text file and database connection options. */
         private void OptionsBtn_Click(object sender, RoutedEventArgs e)
         {
             if (txtCheck.IsVisible)

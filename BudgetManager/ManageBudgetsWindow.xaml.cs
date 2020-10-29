@@ -21,13 +21,13 @@ namespace BudgetManager
     /// </summary>
     public partial class ManageBudgetsWindow : Window
     {
-        // To display budgets from SQL db in the Combobox:
+        // To display budgets from the data connection in the Combobox:
         private List<Budget> budgets = new List<Budget>();
 
         public ManageBudgetsWindow()
         {
             InitializeComponent();
-
+            // Display information about the current connection:
             if (MainWindow.sql && MainWindow.txt)
                 connectionInfo.Text = "Database and TextFile Connection";
             else if (MainWindow.txt)
@@ -39,8 +39,7 @@ namespace BudgetManager
                 connectionInfo.Text = "No connection!";
                 connectionInfo.Foreground = Brushes.Red;
             }
-                
-
+            // Load data:    
             LoadBudgets();
             existingBudgets.ItemsSource = budgets;
         }
@@ -57,13 +56,6 @@ namespace BudgetManager
                 budgets = GlobalConfig.TextFileConnection.GetBudgets();
             else if (GlobalConfig.sqlConnection)
                 budgets = GlobalConfig.SQLConnection.GetBudgets();
-        }
-
-        private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
         }
 
         /// <summary>
@@ -120,6 +112,15 @@ namespace BudgetManager
                 view.Show();
                 this.Close();
             }
+        }
+        /// <summary>
+        /// Return button event handler.
+        /// </summary>
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

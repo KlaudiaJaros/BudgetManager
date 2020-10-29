@@ -6,16 +6,14 @@ using System.Text;
 namespace BudgetManagerLibrary
 {
     /// <summary>
-    /// This is a public static class with all configurations. Visible to anyone.
+    /// This is a public static class with specific configurations for this application.
     /// </summary>
     public static class GlobalConfig
     {
-        /// <summary>
-        /// This is a list of anything that implements the IDataConnection interface. In this case, I am storing database connections and 
-        /// text files connections, because I want my app to have the option to save to both.
-        /// </summary>
+        /* Properties to store a database connection and a text file connection, because this app has the option to save to both: */
         public static IDataConnection SQLConnection { get; private set; }
         public static IDataConnection TextFileConnection { get; private set; }
+        /* Booleans to easily check what connections are established: */
         public static bool sqlConnection;
         public static bool textConnection;
 
@@ -25,7 +23,7 @@ namespace BudgetManagerLibrary
         /// </summary>
         public static void InitialiseConnections(bool SQLBool, bool textFileBool)
         {
-            // separate if statements, because if both parameters are true, the app will save to both, which I want 
+            // separate if statements, because if both parameters are true, the app will save to both:
             if (SQLBool)
             {
                 SQLconnector sql = new SQLconnector();
@@ -43,7 +41,7 @@ namespace BudgetManagerLibrary
         /// <summary>
         /// Returns a connection string from App.config.
         /// </summary>
-        /// <param name="Connection Name"></param>
+        /// <param name="Connection Name">In this case, a database name you want to connect to.</param>
         /// <returns> Connection string. </returns>
         public static string CnnString(string name)
         {

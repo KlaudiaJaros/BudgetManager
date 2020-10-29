@@ -21,8 +21,8 @@ namespace BudgetManager
     /// </summary>
     public partial class AddIncome : Window
     {
-        private Budget Budget = new Budget(null, 0);
-        public static int id=1;
+        private Budget Budget = new Budget(null, 0); // budget to save the income to
+        public static int id=1; // id for text only connection
         public AddIncome(Budget newBudget)
         {
             InitializeComponent();
@@ -133,7 +133,9 @@ namespace BudgetManager
 
             return output;
         }
-
+        /// <summary>
+        /// Return button event handler.
+        /// </summary>
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();

@@ -135,6 +135,9 @@ namespace BudgetManager
             addExpense = false;
         }
 
+        /// <summary>
+        /// Return button event handler.
+        /// </summary>
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();

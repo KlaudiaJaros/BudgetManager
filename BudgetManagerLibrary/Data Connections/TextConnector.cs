@@ -9,11 +9,17 @@ using System.Text;
 
 namespace BudgetManagerLibrary 
 {
+    /// <summary>
+    /// A class to manage writing and reading to and from a text file.
+    /// </summary>
     public class TextConnector : IDataConnection
     {
-        // csv/txt file name :
         private string fileName;
 
+        /// <summary>
+        /// Delete a budget from a text file by providing its ID. This method deletes individual budget's file and erases it from the list of all budgets.
+        /// </summary>
+        /// <param name="budgetId">Budget ID</param>
         public void DeleteBudget(int budgetId)
         {
             // delete budget's text file with expenses and incomes:
@@ -45,7 +51,11 @@ namespace BudgetManagerLibrary
                 File.AppendAllLines(path, newLines);
             }
         }
-
+        /// <summary>
+        /// Edit budget's balance in the list of all budgets.
+        /// </summary>
+        /// <param name="budgetId">Budget's ID</param>
+        /// <param name="budgetBalance">New budget balance</param>
         public void EditBudgetBalance(int budgetId, decimal budgetBalance)
         {
             fileName = "List of all budgets.csv";
@@ -74,13 +84,18 @@ namespace BudgetManagerLibrary
             }
         }
 
+        /// <summary>
+        /// Save a new budget to a text file and add it to the list of all budgets.
+        /// </summary>
+        /// <param name="budget">Budget object</param>
+        /// <returns>Saved Budget object to save</returns>
         public Budget SaveBudget(Budget budget)
         {
             fileName = "List of all budgets.csv";
             // save the csv file path:
             string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
 
-            // convert budget into csv list :
+            // convert budget into csv list and save to a file:
             List<string> lines = new List<string>();
             lines.Add($"BUDGET,{ budget.Id },{ budget.Name },{budget.Balance}");
             if (!File.Exists(path))
@@ -91,10 +106,13 @@ namespace BudgetManagerLibrary
             {
                 File.AppendAllLines(path, lines);
             }
-
              return budget;
         }
-
+        /// <summary>
+        /// Save a new Entry to a budget file.
+        /// </summary>
+        /// <param name="entry">Entry object to save</param>
+        /// <returns>Saved Entry object</returns>
         public Entry SaveEntry(Entry entry)
         {
             fileName = "Budget no " + entry.BudgetID + ".csv";
@@ -102,7 +120,7 @@ namespace BudgetManagerLibrary
             // save the csv file path:
             string path = $"{ ConfigurationManager.AppSettings["filePath"]}\\{fileName}";
 
-            // convert expense into csv list :
+            // convert entry into csv list :
             List<string> lines = new List<string>();
             if (entry.Amount>0)
             {
@@ -111,13 +129,15 @@ namespace BudgetManagerLibrary
             else
             {
                 lines.Add($"EXPENSE,{ entry.Id },{ entry.Name },{ entry.Amount},{ entry.Category},{ entry.Date},{ entry.BudgetID}");
-            }
-            
+            }            
             // save to file:
             File.AppendAllLines(path, lines);
-
             return entry;
         }
+        /// <summary>
+        /// Delete a specified Entry from budget's txt file.
+        /// </summary>
+        /// <param name="entry">Entry object to be deleted</param>
         public void DeleteEntry(Entry entry)
         {
             fileName = "Budget no " + entry.BudgetID + ".csv";
@@ -141,9 +161,10 @@ namespace BudgetManagerLibrary
                 File.AppendAllLines(path, newLines);
             }
         }
-
-        // TODO: implement interface methods below
-
+        /// <summary>
+        /// Get a list of budgets currently saved using text files.
+        /// </summary>
+        /// <returns>A list of existing budgets in the text file connection</returns>
         public List<Budget> GetBudgets()
         {
             List<Budget> budgets = new List<Budget>();
@@ -167,11 +188,11 @@ namespace BudgetManagerLibrary
             }
         }
 
-        public List<Entry> GetEntries()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Get a list of entries from a specified budget sorted by date (descending).
+        /// </summary>
+        /// <param name="budgetId">Budget's ID</param>
+        /// <returns>A list of Entry objects</returns>
         public List<Entry> GetEntriesByDate(int budgetId)
         {
             List<Entry> entries = new List<Entry>();
@@ -197,7 +218,12 @@ namespace BudgetManagerLibrary
             }
         }
     
-
+        /// <summary>
+        /// Return a total spent by month from a specific budget.
+        /// </summary>
+        /// <param name="month">Month described using an integer value</param>
+        /// <param name="budgetId">Budget's ID</param>
+        /// <returns></returns>
         public decimal GetSpendByMonth(int month, int budgetId)
         {
             fileName = "Budget no " + budgetId.ToString() + ".csv";

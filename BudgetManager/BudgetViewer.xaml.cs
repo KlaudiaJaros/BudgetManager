@@ -29,20 +29,20 @@ namespace BudgetManager
     /// </summary>
     public partial class BudgetViewer : Window 
     {
-        private Budget Budget = new Budget(null, 0);
-        private List<Entry> Entries = new List<Entry>();
+        private Budget Budget = new Budget(null, 0); // to store a budget to be displayed
+        private List<Entry> Entries = new List<Entry>(); // to store all budget entries
 
         public BudgetViewer(Budget passedBudget)
         {
             InitializeComponent();
 
-            // summary display:
+            // Budget summary display:
             Budget = passedBudget;
             budgetNameBox.Text = Budget.Name;
             budgetBalanceBox.Text = Budget.Balance.ToString("F");
             DateTime dateTime = DateTime.Now;
             decimal spent = 0;
-
+            // get monthly and average spent:
             if (GlobalConfig.sqlConnection && GlobalConfig.textConnection)
                 spent = GlobalConfig.SQLConnection.GetSpendByMonth(dateTime.Month, Budget.Id);
             else if (GlobalConfig.sqlConnection)
@@ -62,10 +62,12 @@ namespace BudgetManager
             // for the PieChart:
             Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
             
+            // get spent by category and save it in an array:
             decimal[] spendByCategory = new decimal[12];
             double temp = 0;
             string maxSpentCategory = "";
 
+            // calculate spent by category:
             foreach (Entry e in Entries)
             {
                 if (e.Amount <0 )
@@ -123,8 +125,10 @@ namespace BudgetManager
                     maxSpentCategory = e.Category;
                 }
             }
-            
+            // update max spent by category in summary:
             maxCategory.Text = maxSpentCategory; // maybe add the value too? but must change the layout
+            
+            // create a pie chart using spent by category:
             SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(57, 59, 58));
             SeriesCollection piechartData = new SeriesCollection
             {
@@ -240,17 +244,17 @@ namespace BudgetManager
             pieChart.Series = piechartData;
             // colours settings:
             pieChart.SeriesColors = new ColorsCollection();
-            pieChart.SeriesColors.Add(Color.FromRgb(255, 210, 33)); // acc
+            pieChart.SeriesColors.Add(Color.FromRgb(255, 210, 33)); // accommodation
             pieChart.SeriesColors.Add(Color.FromRgb(66, 245, 236)); // phone
-            pieChart.SeriesColors.Add(Color.FromRgb(250, 57, 238)); // electr
-            pieChart.SeriesColors.Add(Color.FromRgb(129, 255, 125)); // grocc
-            pieChart.SeriesColors.Add(Color.FromRgb(112, 138, 255)); // shopp
-            pieChart.SeriesColors.Add(Color.FromRgb(250, 88, 60)); // eating
-            pieChart.SeriesColors.Add(Color.FromRgb(133, 51, 255)); // nights
+            pieChart.SeriesColors.Add(Color.FromRgb(250, 57, 238)); // electricity etc
+            pieChart.SeriesColors.Add(Color.FromRgb(129, 255, 125)); // grocceries
+            pieChart.SeriesColors.Add(Color.FromRgb(112, 138, 255)); // shopping
+            pieChart.SeriesColors.Add(Color.FromRgb(250, 88, 60)); // eating out
+            pieChart.SeriesColors.Add(Color.FromRgb(133, 51, 255)); // nights out
             pieChart.SeriesColors.Add(Color.FromRgb(175, 219, 26)); // transport
             pieChart.SeriesColors.Add(Color.FromRgb(250, 131, 20)); // holiday
-            pieChart.SeriesColors.Add(Color.FromRgb(255, 84, 101)); //enter
-            pieChart.SeriesColors.Add(Color.FromRgb(212, 156, 255)); // sport
+            pieChart.SeriesColors.Add(Color.FromRgb(255, 84, 101)); //entertainment
+            pieChart.SeriesColors.Add(Color.FromRgb(212, 156, 255)); // sports
             pieChart.SeriesColors.Add(Color.FromRgb(154, 156, 161)); //other
             
         }
@@ -258,13 +262,16 @@ namespace BudgetManager
         {
             var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
 
-            //clear selected slice.
+            //clear selected slice:
             foreach (PieSeries series in chart.Series)
                 series.PushOut = 0;
 
             var selectedSeries = (PieSeries)chartpoint.SeriesView;
             selectedSeries.PushOut = 8;
         }
+        /// <summary>
+        /// Load all data using the existing data connection.
+        /// </summary>
         private void LoadData()
         {
             if (GlobalConfig.textConnection && GlobalConfig.sqlConnection)
@@ -281,7 +288,9 @@ namespace BudgetManager
             }
 
         }
-
+        /// <summary>
+        /// Return button event handler.
+        /// </summary>
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window = new MainWindow();
@@ -301,7 +310,11 @@ namespace BudgetManager
             income.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Delete budget event handler. Deletes the currently displayed budget after receiving a confirmation from the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteBudget_Click(object sender, RoutedEventArgs e)
         {
             // Configure the message box to be displayed:
@@ -310,7 +323,7 @@ namespace BudgetManager
             MessageBoxButton button = MessageBoxButton.YesNoCancel;
             MessageBoxImage icon = MessageBoxImage.Warning;
 
-            // Display message box:
+            // Display a warning message box:
             MessageBoxResult result = System.Windows.MessageBox.Show(messageBoxText, caption, button, icon);
 
             // Process message box results:
@@ -342,7 +355,11 @@ namespace BudgetManager
                     break;
             }
         }
-
+        /// <summary>
+        /// Delete Entry event handler. Deletes an entry specified by the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteEntry_Click(object sender, RoutedEventArgs e)
         {
             bool deleteEntry = false;
@@ -370,9 +387,10 @@ namespace BudgetManager
                     break;
             }
 
+            // ensure that the user selected an entry to delete and confirmed it:
             var selectedCells = dataGrid.SelectedCells;
             int index = dataGrid.SelectedIndex;
-            if (selectedCells.Count==5 & deleteEntry)
+            if (selectedCells.Count==5 & deleteEntry) // a full entry seleciton (line) has 5 cells
             {
                 int entryId = 0;
                 var entry = (Entry)dataGrid.SelectedCells.ElementAt(4).Item;
